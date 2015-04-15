@@ -82,3 +82,5 @@ void evsip_endp_destroy(void *pEndp);
 
 /** @} */
 #endif /* EVSIP_ENDP_H_ */
+
+//vim: noai:ts=2:sw=2

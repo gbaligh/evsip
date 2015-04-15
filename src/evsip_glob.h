@@ -31,16 +31,16 @@
  * @struct 	evsip_glob_str
  */
 struct evsip_glob_str {
-	/** Memory manager */
-	su_home_t 	memPage[1];
-	/** Event Loop for Sofia-SIP */
-	su_root_t 	*rootEventLoop;
-	/** User Agent SIP for Sofia-SIP */
-	nua_t		*nua;
-	/** Program argument Configuration file path */
-	const char *confFilePath;
-	/** Configuration Object */
-	evsip_config_t pEvSipConfigCtx[1];
+  /** Memory manager */
+  su_home_t 	memPage[1];
+  /** Event Loop for Sofia-SIP */
+  su_root_t 	*rootEventLoop;
+  /** User Agent SIP for Sofia-SIP */
+  nua_t		*nua;
+  /** Program argument Configuration file path */
+  const char *confFilePath;
+  /** Configuration Object */
+  evsip_config_t pEvSipConfigCtx[1];
 };
 
 /**
@@ -60,3 +60,5 @@ extern evsip_glob_t evSipGlobCtx[];
 const char *evsip_version(void);
 
 #endif /* EVSIP_GLOB_H_ */
+
+//vim: noai:ts=2:sw=2

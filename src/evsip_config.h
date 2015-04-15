@@ -59,3 +59,5 @@ unsigned int evsip_config_start_parse(evsip_config_t *pEvSipConfigCtx);
 unsigned int evsip_config_deinit(evsip_config_t *pEvSipConfigCtx);
 
 #endif /* EVSIP_CONFIG_H_ */
+
+//vim: noai:ts=2:sw=2

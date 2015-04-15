@@ -294,3 +294,4 @@ unsigned int evsip_config_deinit(evsip_config_t *pEvSipConfigCtx)
   return (EVSIP_SUCCESS);
 }
 
+//vim: noai:ts=2:sw=2

@@ -11,3 +11,5 @@ typedef void (evsip_mem_destroy_h)(void *data);
 
 
 #endif /* EVSIP_MEM_H_ */
+
+//vim: noai:ts=2:sw=2

@@ -37,3 +37,5 @@
 #define MACRO2STRING(_m)  VALUE2STRING(_m)
 
 #endif /* EVSIP_TYPES_H_ */
+
+//vim: noai:ts=2:sw=2

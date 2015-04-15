@@ -27,3 +27,5 @@ unsigned int evsip_stop(void);
 void evsip_deinit(void );
 
 #endif /* EVSIP_CORE_H_ */
+
+//vim: noai:ts=2:sw=2

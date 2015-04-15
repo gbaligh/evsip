@@ -70,3 +70,5 @@ unsigned int evsip_cli_cmd_execute(evsip_cli_cmd_t *pCmdCtx);
 void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx);
 
 #endif /* EVSIP_CLI_CMDLST_H_ */
+
+//vim: noai:ts=2:sw=2

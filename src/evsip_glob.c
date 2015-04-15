@@ -13,6 +13,7 @@ evsip_glob_t evSipGlobCtx[1];
  */
 const char *evsip_version(void)
 {
-	return (sofia_sip_name_version);
+  return (sofia_sip_name_version);
 }
 
+//vim: noai:ts=2:sw=2

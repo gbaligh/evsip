@@ -12,3 +12,5 @@
 unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *sip, tagi_t tags[]);
 
 #endif /* EVSIP_REGISTER_H_ */
+
+//vim: noai:ts=2:sw=2

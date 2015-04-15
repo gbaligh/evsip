@@ -6,7 +6,7 @@
 
 /** Defines a reference-counting memory object */
 struct evsip_mem_str {
-	su_home_t home[1]; /**< SOFIA-SIP memory manager */
+  su_home_t home[1]; /**< SOFIA-SIP memory manager */
 };
 
 static struct evsip_mem_str evsip_mem[1];
@@ -20,11 +20,11 @@ static struct evsip_mem_str evsip_mem[1];
  */
 unsigned int evsip_mem_init(su_home_t *h)
 {
-	if (su_home_init(h) != 0) {
-		return (EVSIP_ERROR_UNKNOWN);
-	}
+  if (su_home_init(h) != 0) {
+    return (EVSIP_ERROR_UNKNOWN);
+  }
 
-	return (EVSIP_SUCCESS);
+  return (EVSIP_SUCCESS);
 }
 
 /**
@@ -37,11 +37,13 @@ unsigned int evsip_mem_init(su_home_t *h)
  */
 void *evsip_mem_alloc(size_t size, evsip_mem_destroy_h *dh)
 {
-	struct evsip_mem_str *m;
+  struct evsip_mem_str *m;
 
-	m = su_alloc(evsip_mem->home, size);
-	if (!m)
-		return NULL;
+  m = su_alloc(evsip_mem->home, size);
+  if (!m)
+    return NULL;
 
-	return ((void *)(m + 1));
+  return ((void *)(m + 1));
 }
+
+//vim: noai:ts=2:sw=2

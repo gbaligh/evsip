@@ -39,3 +39,5 @@ unsigned int evsip_cli_stop();
 void evsip_cli_deinit();
 
 #endif /* EVSIP_CLI_H_ */
+
+//vim: noai:ts=2:sw=2
