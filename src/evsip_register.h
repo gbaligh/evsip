@@ -1,10 +1,3 @@
-/*
- * evsip_register.h
- *
- *  Created on: 19 déc. 2014
- *      Author: G545485
- */
-
 #ifndef EVSIP_REGISTER_H_
 #define EVSIP_REGISTER_H_
 

@@ -1,10 +1,3 @@
-/*
- * evsip_types.h
- *
- *  Created on: 22 nov. 2014
- *      Author: G545485
- */
-
 /**
  * @file evsip_types.h
  * @brief Type and Const for EvSip

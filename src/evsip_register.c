@@ -1,10 +1,3 @@
-/*
- * evsip_register.c
- *
- *  Created on: 19 déc. 2014
- *      Author: G545485
- */
-
 #include <stdlib.h>
 #include "evsip_glob.h"
 #include "evsip_core.h"

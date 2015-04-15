@@ -1,10 +1,3 @@
-/*
- * evsip_sig.c
- *
- *  Created on: 25 nov. 2014
- *      Author: G545485
- */
-
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>

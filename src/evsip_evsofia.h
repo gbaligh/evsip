@@ -1,10 +1,3 @@
-/*
- * evsip_hsofia.h
- *
- *  Created on: 21 nov. 2014
- *      Author: G545485
- */
-
 #ifndef EVSIP_AL_H_
 #define EVSIP_AL_H_
 

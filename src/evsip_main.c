@@ -1,10 +1,3 @@
-/*
- * evsip_main.c
- *
- *  Created on: 16 nov. 2014
- *      Author: G545485
- */
-
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>

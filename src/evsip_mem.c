@@ -1,10 +1,3 @@
-/*
- * evsip_mem.c
- *
- *  Created on: 18 janv. 2015
- *      Author: G545485
- */
-
 #include <sofia-sip/su.h>
 #include <sofia-sip/su_alloc.h>
 #include <sofia-sip/su_alloc_stat.h>

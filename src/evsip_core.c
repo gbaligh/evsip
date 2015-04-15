@@ -1,10 +1,3 @@
-/*
- * evsip_core.c
- *
- *  Created on: 22 nov. 2014
- *      Author: G545485
- */
-
 #include "evsip_glob.h"
 #include "evsip_evsofia.h"
 #include "evsip_log.h"

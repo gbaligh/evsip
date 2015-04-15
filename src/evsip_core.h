@@ -1,10 +1,3 @@
-/*
- * evsip_core.h
- *
- *  Created on: 22 nov. 2014
- *      Author: G545485
- */
-
 #ifndef EVSIP_CORE_H_
 #define EVSIP_CORE_H_
 

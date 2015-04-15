@@ -1,10 +1,3 @@
-/*
- * evsip_endp.c
- *
- *  Created on: 22 déc. 2014
- *      Author: G545485
- */
-
 /**
  * @file evsip_endp.c
  * @brief SIP end point controller

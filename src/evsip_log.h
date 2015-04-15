@@ -1,10 +1,3 @@
-/*
- * evsip_log.h
- *
- *  Created on: 21 nov. 2014
- *      Author: G545485
- */
-
 #ifndef EVSIP_LOG_H_
 #define EVSIP_LOG_H_
 

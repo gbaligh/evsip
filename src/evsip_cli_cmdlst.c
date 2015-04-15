@@ -1,10 +1,3 @@
-/*
- * evsip_cli_cmdlst.c
- *
- *  Created on: 12 janv. 2015
- *      Author: G545485
- */
-
 /**
  * @file evsip_cli_cmdlst.c
  * @brief

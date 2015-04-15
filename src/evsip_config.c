@@ -1,10 +1,3 @@
-/*
- * evsip_config.c
- *
- *  Created on: 6 déc. 2014
- *      Author: G545485
- */
-
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>

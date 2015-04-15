@@ -1,10 +1,3 @@
-/*
- * evsip_glob.c
- *
- *  Created on: 21 nov. 2014
- *      Author: G545485
- */
-
 #include "evsip_glob.h"
 
 #include <sofia-sip/sofia_features.h>

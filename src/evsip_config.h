@@ -1,10 +1,3 @@
-/*
- * evsip_config.h
- *
- *  Created on: 6 déc. 2014
- *      Author: G545485
- */
-
 #ifndef EVSIP_CONFIG_H_
 #define EVSIP_CONFIG_H_
 

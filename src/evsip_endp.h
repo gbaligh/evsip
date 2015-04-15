@@ -1,10 +1,3 @@
-/*
- * evsip_endp.h
- *
- *  Created on: 8 avr. 2015
- *      Author: G545485
- */
-
 /**
  * @file evsip_endp.h
  * @brief SIP end point controller private export

@@ -1,10 +1,3 @@
-/*
- * evsip_mem.h
- *
- *  Created on: 18 janv. 2015
- *      Author: G545485
- */
-
 #ifndef EVSIP_MEM_H_
 #define EVSIP_MEM_H_
 

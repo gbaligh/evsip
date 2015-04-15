@@ -1,10 +1,3 @@
-/*
- * evsip_log.c
- *
- *  Created on: 22 nov. 2014
- *      Author: G545485
- */
-
 #include <syslog.h>
 #include <sofia-sip/su.h>
 #define SU_LOG	evsip_log
@@ -12,9 +5,21 @@
 #include "evsip_types.h"
 #include "evsip_log.h"
 
+/**
+ * @brief default log level
+ */
 #define EVSIP_LOG_DEF_LEVEL		9
+/**
+ * @brief Default Name if there is no name found for the module
+ */
 #define EVSIP_LOG_DEF_NAME		"evsip_log"
+/**
+ * @brief Envirenement paramter that contain LOG Level
+ */
 #define EVSIP_LOG_DEF_ENV		"EVSIP_LOG_DEBUG"
+/**
+ * @brief Set this macro to use SysLog
+ */
 #define EVSIP_LOG_USE_SYSLOG	1
 
 su_log_t evSipLog[] = {

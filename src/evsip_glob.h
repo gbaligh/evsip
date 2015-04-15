@@ -1,10 +1,3 @@
-/*
- * evsip_glob.h
- *
- *  Created on: 21 nov. 2014
- *      Author: G545485
- */
-
 #ifndef EVSIP_GLOB_H_
 #define EVSIP_GLOB_H_
 

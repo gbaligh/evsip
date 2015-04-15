@@ -1,10 +1,3 @@
-/*
- * evsip_cli.h
- *
- *  Created on: 22 déc. 2014
- *      Author: G545485
- */
-
 /**
  * @file evsip_cli.h
  * @brief
