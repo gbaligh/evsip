@@ -178,6 +178,7 @@ static int evsip_cli_input_handler(	su_root_magic_t *Ctx,
 /**
  *
  * @return
+ * EVSIP_SUCCESS
  */
 unsigned int evsip_cli_init()
 {
@@ -208,6 +209,7 @@ unsigned int evsip_cli_init()
 /**
  *
  * @return
+ * EVSIP_SUCCESS
  */
 unsigned int evsip_cli_add_default_cmd()
 {
@@ -232,6 +234,8 @@ unsigned int evsip_cli_add_default_cmd()
 /**
  *
  * @return
+ * EVSIP_SUCCESS
+ * EVSIP_ERROR_OUTOFRESOURCES
  */
 unsigned int evsip_cli_start()
 {
@@ -264,6 +268,7 @@ unsigned int evsip_cli_start()
 /**
  *
  * @return
+ * EVSIP_SUCCESS
  */
 unsigned int evsip_cli_stop()
 {
