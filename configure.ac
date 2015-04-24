@@ -1,9 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(EvSipv2, 1.0)
+AC_INIT(EvSip, 1.0.0)
 
-AC_CONFIG_SRCDIR([src/config.h.in])
+AC_CONFIG_SRCDIR([src/evsip_main.c])
 AC_CONFIG_HEADERS([src/config.h])
 
 AC_CANONICAL_SYSTEM
@@ -27,6 +27,7 @@ DX_INIT_DOXYGEN($PACKAGE_NAME, Doxyfile, docs)
 
 # Checks for libraries.
 PKG_CHECK_MODULES([SOFIA], [sofia-sip-ua])
+PKG_CHECK_MODULES([CHECK], [check])
 
 # Checks for header files.
 AC_STDC_HEADERS
@@ -42,6 +43,6 @@ AC_TYPE_UINT64_T
 AC_CHECK_FUNCS([memset])
 
 
-AC_CONFIG_FILES(Makefile src/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile test/Makefile)
 AC_OUTPUT
 

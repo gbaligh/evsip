@@ -1,12 +1,13 @@
 #include <sofia-sip/su.h>
 #include <sofia-sip/su_alloc.h>
 #include <sofia-sip/su_alloc_stat.h>
+#include <string.h>
 #include "evsip_mem.h"
 #include "evsip_types.h"
 
 /** Defines a reference-counting memory object */
 struct evsip_mem_str {
-  su_home_t home[1]; /**< SOFIA-SIP memory manager */
+  su_home_t *home; /**< SOFIA-SIP memory manager */
 };
 
 struct evsip_memHeader_str {
@@ -54,7 +55,7 @@ void *evsip_mem_alloc(size_t size, evsip_mem_destroy_h *dh)
   mh->nbRefs = 1;
   mh->dh = dh;
 
-  return ((void *)(m + 1));
+  return ((void *)(mh + 1));
 }
 
 /**
@@ -94,7 +95,7 @@ void *evsip_mem_ref(void *data)
 
 	m = ((struct evsip_memHeader_str *)data) - 1;
 
-	++m->nrefs;
+	++m->nbRefs;
 
 	return data;
 }
@@ -117,16 +118,16 @@ void *evsip_mem_deref(void *data)
 
 	m = ((struct evsip_memHeader_str *)data) - 1;
 
-	if (--m->nrefs > 0)
+	if (--m->nbRefs > 0)
 		return NULL;
 
 	if (m->dh)
 		m->dh(data);
 
-	if (m->nrefs > 0)
+	if (m->nbRefs > 0)
 		return NULL;
 
-	free(m);
+	su_free(evsip_memCtx->home, m);
 
 	return NULL;
 }
@@ -147,7 +148,7 @@ uint32_t evsip_mem_nrefs(const void *data)
 
 	m = ((struct evsip_memHeader_str *)data) - 1;
 
-	return m->nrefs;
+	return m->nbRefs;
 }
 
 //vim: noai:ts=2:sw=2
