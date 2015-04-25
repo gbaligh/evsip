@@ -9,7 +9,7 @@ evsip_glob_t evSipGlobCtx[1];
 
 /**
  *
- * @return
+ * @return EvSip version
  */
 const char *evsip_version(void)
 {

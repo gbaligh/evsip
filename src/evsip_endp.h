@@ -3,6 +3,9 @@
  * @brief SIP end point controller private export
  *
  * @addtogroup Endp
+ :q
+
+
  * SIP End Point
  * @{
  */
@@ -17,44 +20,44 @@ typedef struct evsip_endp_ctx evsip_endp_t;
 
 /**
  *
- * @param pEndp
+ * @param[in] pEndp
  * @return
  */
 unsigned int evsip_endp_create(evsip_endp_t **pEndp);
 
 /**
  *
- * @param pEndp
+ * @param[in] pEndp
  * @return
  */
 unsigned int evsip_endp_attach(evsip_endp_t *pEndp);
 
 /**
  *
- * @param pEndp
+ * @param[in] pEndp
  * @return
  */
 unsigned int evsip_endp_isAttached(evsip_endp_t *pEndp);
 
 /**
  *
- * @param pEndp
+ * @param[in] pEndp
  * @return
  */
 unsigned int evsip_endp_dettach(evsip_endp_t *pEndp);
 
 /**
  *
- * @param pEndp
- * @param pIpv4
+ * @param[in] pEndp
+ * @param[in] pIpv4
  * @return
  */
 unsigned int evsip_endp_setHostIpv4(evsip_endp_t *pEndp, const char *pIpv4);
 
 /**
  *
- * @param pEndp
- * @param pContact
+ * @param[in] pEndp
+ * @param[in] pContact
  * @return
  */
 unsigned int evsip_endp_setContact(evsip_endp_t *pEndp, const char *pContact);

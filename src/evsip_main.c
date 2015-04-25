@@ -10,28 +10,31 @@
 #include "evsip_sig.h"
 #include "evsip_log.h"
 
+/** @brief */
 #define EVSIP_DEFAULT_CONFIG_FILE	"/etc/evsipconfig.conf"
 
 /**
  *
- * @param argc
- * @param argv
- * @return
+ * @param[in] argc
+ * @param[in] argv
+ * @return EVSIP_SUCCESS
  */
 static unsigned int evsip_usage(int argc, char *argv[])
 {
   EVSIP_UNUSED_ARG(argc);
 
   fprintf(stdout, "%s [options]\n", argv[0]);
+
   return (EVSIP_SUCCESS);
 }
 
 
 /**
  *
- * @param argc
- * @param argv
- * @return
+ * @param[in] argc
+ * @param[in] argv
+ * @return  EVSIP_SUCCESS
+ *          EVSIP_ERROR_BADPARAM
  */
 static unsigned int evsip_args(int argc, char *argv[])
 {
@@ -57,10 +60,10 @@ static unsigned int evsip_args(int argc, char *argv[])
 }
 
 /**
- * Main Function for EvSip Server
+ * @brief Main Function for EvSip Server
  *
- * @param argc
- * @param argv
+ * @param[in] argc
+ * @param[in] argv
  * @return 	EXIT_SUCCESS on success
  * 			    EXIT_FAILURE on failure
  */

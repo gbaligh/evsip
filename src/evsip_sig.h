@@ -6,8 +6,9 @@
  * @return
  */
 unsigned int evsip_sig_init(void);
+
 /**
- *
+ * @return
  */
 void evsip_sig_deinit(void);
 

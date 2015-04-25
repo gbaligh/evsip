@@ -8,21 +8,25 @@
 #include "evsip_core.h"
 #include "evsip_glob.h"
 
+/** @brief */
 static struct sigaction pEvSipSigAct[1];
 
 /**
+ * @brief Handler for all Signal basic
  *
- * @param signum
+ * @param[in] signum
  */
 static void evsip_sig_handler(int signum)
 {
   EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using basic handler", signum);
 }
+
 /**
+ * @brief Handler for all Signal with info
  *
- * @param signum
- * @param pInfo
- * @param pCtx
+ * @param[in] signum
+ * @param[in] pInfo
+ * @param[in] pCtx
  */
 static void evsip_sig_sigaction(int signum, siginfo_t *pInfo, void *pCtx)
 {
@@ -30,9 +34,13 @@ static void evsip_sig_sigaction(int signum, siginfo_t *pInfo, void *pCtx)
   EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using advanced signal handler", signum);
   su_root_break(evSipGlobCtx->rootEventLoop);
 }
+
 /**
+ * @brief Initialize the Signal handler module
  *
  * @return
+ * EVSIP_SUCCESS
+ * EVSIP_ERROR_UNINITIALIZED
  */
 unsigned int evsip_sig_init()
 {
@@ -72,8 +80,9 @@ unsigned int evsip_sig_init()
 
   return (EVSIP_SUCCESS);
 }
+
 /**
- *
+ * @brief
  */
 void evsip_sig_deinit()
 {

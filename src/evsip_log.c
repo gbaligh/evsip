@@ -22,6 +22,9 @@
  */
 #define EVSIP_LOG_USE_SYSLOG	1
 
+/**
+ * @brief
+ */
 su_log_t evSipLog[] = {
   {
     sizeof(su_log_t),
@@ -35,8 +38,10 @@ su_log_t evSipLog[] = {
   }
 };
 
+/** @brief */
 char const evsip_log_version[] = "1.0.0";
 
+/** @brief */
 const char *evsip_log_level_char[EVSIP_LOG_MAX] = {
   "NONE",
   "CRIT",

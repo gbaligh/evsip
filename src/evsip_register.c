@@ -31,11 +31,12 @@ static inline unsigned int evsip_register_check(nua_t *nua, nua_handle_t *nh, si
 
 /**
  *
- * @param nua
- * @param nh
- * @param sip
- * @param tags
- * @return
+ * @param[in] nua
+ * @param[in] nh
+ * @param[in] sip
+ * @param[in] tags
+ * @return  EVSIP_SUCCESS
+ *          EVSIP_ERROR_BADPARAM
  */
 unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *sip, tagi_t tags[])
 {

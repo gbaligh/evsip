@@ -10,18 +10,22 @@ struct evsip_mem_str {
   su_home_t *home; /**< SOFIA-SIP memory manager */
 };
 
+/**
+ * @brief
+ */
 struct evsip_memHeader_str {
   unsigned int magic;
   uint32_t nbRefs;
   evsip_mem_destroy_h *dh;
 };
 
+/** @brief */
 static struct evsip_mem_str evsip_memCtx[1];
 
 /**
  * Initialize the memory manager
  *
- * @param h SOFIA SIP memory manager to use
+ * @param[in] h SOFIA SIP memory manager to use
  *
  * @return EVSIP_SUCCESS on success
  */
@@ -39,8 +43,8 @@ unsigned int evsip_mem_init(su_home_t *h)
 /**
  * Allocate a new reference-counted memory object
  *
- * @param size Size of memory object
- * @param dh   Optional destructor, called when destroyed
+ * @param[in] size Size of memory object
+ * @param[in] dh   Optional destructor, called when destroyed
  *
  * @return Pointer to allocated object
  */
@@ -61,8 +65,8 @@ void *evsip_mem_alloc(size_t size, evsip_mem_destroy_h *dh)
 /**
  * Allocate a new reference-counted memory object. Memory is zeroed.
  *
- * @param size Size of memory object
- * @param dh   Optional destructor, called when destroyed
+ * @param[in] size Size of memory object
+ * @param[in] dh   Optional destructor, called when destroyed
  *
  * @return Pointer to allocated object
  */
@@ -82,7 +86,7 @@ void *evsip_mem_zalloc(size_t size, evsip_mem_destroy_h *dh)
 /**
  * Reference a reference-counted memory object
  *
- * @param data Memory object
+ * @param[in] data Memory object
  *
  * @return Memory object (same as data)
  */
@@ -105,7 +109,7 @@ void *evsip_mem_ref(void *data)
  * is zero, the destroy handler will be called (if present) and the memory
  * will be freed
  *
- * @param data Memory object
+ * @param[in] data Memory object
  *
  * @return Always NULL
  */
@@ -135,7 +139,7 @@ void *evsip_mem_deref(void *data)
 /**
  * Get number of references to a reference-counted memory object
  *
- * @param data Memory object
+ * @param[in] data Memory object
  *
  * @return Number of references
  */
