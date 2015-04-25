@@ -17,6 +17,13 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Windows executable
+*.exe
+
+# Folder
+.deps
+autom4te.cache
+
 # =========================
 # Operating System Files
 # =========================
@@ -41,6 +48,28 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# 
+# Autotools
+#
+# Makefile/config/configure
+Makefile
+Makefile.in
+configure
+config.guess
+config.status
+aclocal.m4
+compile
+config.sub
+depcomp
+install-sh
+missing
+config.h
+config.h.in
+*~
+stamp-h1
+test-driver
+*.trs
 
 # Object files
 *.o
