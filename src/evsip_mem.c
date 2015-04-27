@@ -123,13 +123,13 @@ void *evsip_mem_deref(void *data)
 	m = ((struct evsip_memHeader_str *)data) - 1;
 
 	if (--m->nbRefs > 0)
-		return NULL;
+		return (void *)(m + 1);
 
 	if (m->dh)
 		m->dh(data);
 
 	if (m->nbRefs > 0)
-		return NULL;
+		return (void *)(m + 1);
 
 	su_free(evsip_memCtx->home, m);
 
