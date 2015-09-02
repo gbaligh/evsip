@@ -38,6 +38,13 @@ void evsip_evsofia_main(nua_event_t   event,
       " - sip:%p",
       status, phrase, nua, magic, nh, hmagic, sip);
 
+  if (sip) {
+      const sip_from_t *pFromHeader;
+    tl_gets(tags,
+            SIPTAG_FROM_REF(pFromHeader),
+            TAG_END());
+  }
+
   switch (event) {
 
     case nua_i_register:
@@ -63,7 +70,8 @@ void evsip_evsofia_main(nua_event_t   event,
       break;
 
     case nua_r_shutdown:
-      su_root_break(evSipGlobCtx->rootEventLoop);
+      evsip_deinit();
+      //su_root_break(evSipGlobCtx->rootEventLoop);
       break;
 
     case nua_r_set_params:
@@ -72,7 +80,7 @@ void evsip_evsofia_main(nua_event_t   event,
 
     default:
       EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "unknown/not handled event %d:%s\n", event, phrase);
-      nua_respond(nh, status, phrase, TAG_END());
+      //nua_respond(nh, status, phrase, TAG_END());
       break;
   }
 }

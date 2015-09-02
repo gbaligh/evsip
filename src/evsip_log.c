@@ -1,3 +1,5 @@
+#include <string.h>
+#include <time.h>
 #include <syslog.h>
 #include <sofia-sip/su.h>
 #define SU_LOG	evsip_log
@@ -20,7 +22,7 @@
 /**
  * @brief Set this macro to use SysLog
  */
-#define EVSIP_LOG_USE_SYSLOG	1
+#define EVSIP_LOG_USE_SYSLOG	0
 
 /**
  * @brief
@@ -51,10 +53,8 @@ const char *evsip_log_level_char[EVSIP_LOG_MAX] = {
   "DEBUG",
 };
 
-void evsip_log_vprint(void *stream, char const *fmt, va_list ap)
+void evsip_log_vprint(void *UNUSED(stream), char const *fmt, va_list ap)
 {
-  if (stream) {};
-
   if (EVSIP_LOG_USE_SYSLOG) {
     vsyslog(0, fmt, ap);
   } else {
@@ -80,17 +80,14 @@ unsigned int evsip_log_init()
   return (EVSIP_SUCCESS);
 }
 
-void evsip_log_print(const char *file, const char *func, unsigned int line, unsigned int level, const char *fmt, ...)
+void evsip_log_print(const char *UNUSED(file), const char *UNUSED(func), unsigned int UNUSED(line), unsigned int level, const char *fmt, ...)
 {
   va_list ap;
 
-  if (line) {};
-  if (file) {};
-  if (func) {};
-
   va_start(ap, fmt);
   if (!EVSIP_LOG_USE_SYSLOG) {
-    fprintf(stdout, "[%s]- ", evsip_log_level_char[level]);
+    fprintf(stdout, "[%*s%*s]- ", (int)(7 + strlen(evsip_log_level_char[level])/2), evsip_log_level_char[level],
+			 (int)(7 - strlen(evsip_log_level_char[level])/2), "");
   } else {
     syslog(LOG_MAKEPRI(LOG_DAEMON, level), "[%s]- ", evsip_log_level_char[level]);
   }
@@ -101,16 +98,6 @@ void evsip_log_print(const char *file, const char *func, unsigned int line, unsi
 void evsip_log_deinit()
 {
   /* Nothing to do */
-}
-
-__attribute__((no_instrument_function)) void __cyg_profile_func_enter (void *func,  void *caller)
-{
-  fprintf(stderr, "enter %p from %p at %lu\n", func, caller, time(NULL) );
-}
-
-__attribute__((no_instrument_function)) void __cyg_profile_func_exit (void *func, void *caller)
-{
-  fprintf(stderr, "exit %p to %p at %lu\n", func, caller, time(NULL));
 }
 
 //vim: noai:ts=2:sw=2

@@ -143,34 +143,6 @@ static unsigned int evsip_config_keyval_handler(struct evsip_config_str *_pEvSip
   return (EVSIP_ERROR_UNKNOWN);
 }
 
-#if 0
-static int evsip_config_cmd_handler(const char *cmd)
-{
-  uint32_t i = 0;
-  struct evsip_config_str *_pEvSipConfigCtx = evSipGlobCtx->pEvSipConfigCtx;
-
-  for (i = 0; i < sizeof(evsip_config_mapping)/sizeof(evsip_config_mapping[0]); ++i) {
-    fprintf(stdout, "%s: ", evsip_config_mapping[i].name);
-    switch (evsip_config_mapping[i].valueType) {
-      case EVSIP_CONIFG_TYPE_STRING64: {
-                                         fprintf(stdout, "\"%s\"\n", (char *)_pEvSipConfigCtx + evsip_config_mapping[i].offset);
-                                         break;
-                                       }
-      case EVSIP_CONIFG_TYPE_INTEGER: {
-                                        fprintf(stdout, "%d\n", *((int *)((char *)_pEvSipConfigCtx + evsip_config_mapping[i].offset)));
-                                        break;
-                                      }
-    }
-  }
-  return (EVSIP_SUCCESS);
-}
-#endif
-
-static void evsip_config_add_cmd()
-{
-
-}
-
 /**
  *
  * @param pEvSipConfigCtx
@@ -264,10 +236,6 @@ unsigned int evsip_config_init(evsip_config_t *pEvSipConfigCtx, const char *pFil
   strcpy(_pEvSipConfigCtx->localIpAddress, EVSIP_CONFIG_DEF_LOCAL_ADDR);
 
   strcpy(_pEvSipConfigCtx->userAgent, EVSIP_CONFIG_DEF_USRAGENT);
-
-
-
-  evsip_config_add_cmd();
 
   return (EVSIP_SUCCESS);
 }

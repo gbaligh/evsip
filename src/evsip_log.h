@@ -16,7 +16,7 @@ enum {
  */
 #define EVSIP_LOG(__MODULE__, __LEVEL__, __FMT__, __ARGS__...) \
   do { \
-    evsip_log_print(__FILE__, __FUNCTION__, __LINE__, __LEVEL__, __FMT__ "\n", ##__ARGS__); \
+    evsip_log_print(__FILE__, __FUNCTION__, __LINE__, __LEVEL__, "%s - " __FMT__ "\n", "["#__MODULE__"]", ##__ARGS__); \
   } while (0)
 
 /**

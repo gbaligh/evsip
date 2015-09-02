@@ -11,6 +11,13 @@
 /** @brief */
 static struct sigaction pEvSipSigAct[1];
 
+static struct evsip_sig_str {
+    su_home_t *home;
+    su_root_t *root;
+    _su_task_r task;
+    struct sigaction *action;
+} pEvSipSigCtx[1];
+
 /**
  * @brief Handler for all Signal basic
  *
@@ -18,7 +25,13 @@ static struct sigaction pEvSipSigAct[1];
  */
 static void evsip_sig_handler(int signum)
 {
-  EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using basic handler", signum);
+    EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using basic handler", signum);
+}
+
+static int evsip_sig_task_clbk(void *pRef)
+{
+	su_root_break(pEvSipSigCtx->root);
+	return 0;
 }
 
 /**
@@ -30,9 +43,10 @@ static void evsip_sig_handler(int signum)
  */
 static void evsip_sig_sigaction(int signum, siginfo_t *pInfo, void *pCtx)
 {
-  EVSIP_UNUSED_ARG(pInfo && pCtx);
-  EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using advanced signal handler", signum);
-  su_root_break(evSipGlobCtx->rootEventLoop);
+	 int _retVal = 0;
+    EVSIP_UNUSED_ARG(pInfo && pCtx);
+    EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using advanced signal handler", signum);
+	 su_task_execute(pEvSipSigCtx->task, evsip_sig_task_clbk, (void *)0, &_retVal);
 }
 
 /**
@@ -42,16 +56,19 @@ static void evsip_sig_sigaction(int signum, siginfo_t *pInfo, void *pCtx)
  * EVSIP_SUCCESS
  * EVSIP_ERROR_UNINITIALIZED
  */
-unsigned int evsip_sig_init()
+unsigned int evsip_sig_init(su_root_t *pRoot, su_home_t *pHome)
 {
+    if ((!pRoot) || (!pHome)) {
+        return EVSIP_ERROR_BADPARAM;
+    }
   /*
    * specifies the action to be associated with signum and may
    * be SIG_DFL for the default action, SIG_IGN to ignore this signal, or
    * a pointer to a signal handling function.  This function receives the
    * signal number as its only argument.
    */
-  pEvSipSigAct->sa_handler = evsip_sig_handler;
-  /*
+    pEvSipSigAct->sa_handler = evsip_sig_handler;
+    /*
    * If SA_SIGINFO is specified in sa_flags, then sa_sigaction (instead of
    * sa_handler) specifies the signal-handling function for signum.  This
    * function receives the signal number as its first argument, a pointer
@@ -60,25 +77,31 @@ unsigned int evsip_sig_init()
    * function doesn't make any use of the third argument.  See
    * getcontext(3) for further information about ucontext_t.)
    */
-  pEvSipSigAct->sa_sigaction = evsip_sig_sigaction;
-  /* The signal handler takes three arguments, not one.  In
+    pEvSipSigAct->sa_sigaction = evsip_sig_sigaction;
+    /* The signal handler takes three arguments, not one.  In
    * this case, sa_sigaction should be set instead of
    * sa_handler.  This flag is meaningful only when
    * establishing a signal handler. */
-  pEvSipSigAct->sa_flags = SA_SIGINFO | SA_RESTART;
+    pEvSipSigAct->sa_flags = SA_SIGINFO | SA_RESTART;
 
-  sigfillset(&pEvSipSigAct->sa_mask);
+    sigfillset(&pEvSipSigAct->sa_mask);
 
-  if (sigaction(SIGINT, pEvSipSigAct, NULL) < 0) {
-    EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_ERROR, "Setting SIGINT failure");
-    return (EVSIP_ERROR_UNINITIALIZED);
-  }
-  if (sigaction(SIGTERM, pEvSipSigAct, NULL) < 0) {
-    EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_ERROR, "Setting SIGKTERM failure");
-    return (EVSIP_ERROR_UNINITIALIZED);
-  }
+    if (sigaction(SIGINT, pEvSipSigAct, NULL) < 0) {
+        EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_ERROR, "Setting SIGINT failure");
+        return (EVSIP_ERROR_UNINITIALIZED);
+    }
+    if (sigaction(SIGTERM, pEvSipSigAct, NULL) < 0) {
+        EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_ERROR, "Setting SIGKTERM failure");
+        return (EVSIP_ERROR_UNINITIALIZED);
+    }
 
-  return (EVSIP_SUCCESS);
+    pEvSipSigCtx->action = pEvSipSigAct;
+    pEvSipSigCtx->home = pHome;
+    pEvSipSigCtx->root = pRoot;
+	 pEvSipSigCtx->task = su_root_task(pRoot);
+
+
+    return (EVSIP_SUCCESS);
 }
 
 /**
@@ -86,6 +109,7 @@ unsigned int evsip_sig_init()
  */
 void evsip_sig_deinit()
 {
+
 
 }
 

@@ -5,7 +5,7 @@
  *
  * @return
  */
-unsigned int evsip_sig_init(void);
+unsigned int evsip_sig_init(su_root_t *pRoot, su_home_t *pHome);
 
 /**
  * @return
