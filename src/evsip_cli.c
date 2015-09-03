@@ -120,9 +120,7 @@ static void evsip_cli_prompt(int fdout, const unsigned int clean)
  * @param arg
  * @return
  */
-static int evsip_cli_input_handler(	su_root_magic_t *Ctx,
-    su_wait_t 		*Wait,
-    su_wakeup_arg_t *arg)
+static int evsip_cli_input_handler(	su_root_magic_t *Ctx, su_wait_t *Wait, su_wakeup_arg_t *arg)
 {
   char c = 0;
   size_t size = 0;
@@ -206,6 +204,7 @@ unsigned int evsip_cli_init()
   return (EVSIP_SUCCESS);
 }
 
+
 /**
  *
  * @return
@@ -214,16 +213,8 @@ unsigned int evsip_cli_init()
 unsigned int evsip_cli_add_default_cmd()
 {
   unsigned int _ret = EVSIP_SUCCESS;
-  evsip_cli_cmd_t *_pCmd = (evsip_cli_cmd_t *)0;
-
-  _ret = evsip_cli_cmd_init(&_pCmd,
-      "help", "Show all available command",
-      1, 1);
-  if ( _ret != EVSIP_SUCCESS) {
-    return _ret;
-  }
-
-  _ret = evsip_cli_cmd_register(_pCmd);
+  
+  _ret = evsip_cli_cmd_register_help_cmd();
   if (_ret != EVSIP_SUCCESS) {
     return _ret;
   }

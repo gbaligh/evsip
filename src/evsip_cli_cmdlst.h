@@ -39,7 +39,7 @@ unsigned int evsip_cli_cmd_init(evsip_cli_cmd_t **pCtx,
  * @param pCmdCtx
  * @return
  */
-unsigned int evsip_cli_cmd_register(evsip_cli_cmd_t *pCmdCtx);
+unsigned int evsip_cli_cmd_register(evsip_cli_cmd_t *pCmdCtx, unsigned int (*exec_f)(void *), void *arg);
 
 /**
  *
@@ -68,6 +68,9 @@ unsigned int evsip_cli_cmd_execute(evsip_cli_cmd_t *pCmdCtx);
  * @param pCmdCtx
  */
 void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx);
+
+
+unsigned int evsip_cli_cmd_register_help_cmd(void);
 
 #endif /* EVSIP_CLI_CMDLST_H_ */
 
