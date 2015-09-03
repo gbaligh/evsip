@@ -68,9 +68,11 @@ unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *s
     if (!authorization) {
         char auth[256];
         snprintf(auth, sizeof(auth), "Digest realm=\"EvSipServer\", nonce=\"%d\", algorithm=MD5, qop=\"auth\"", (int)random());
+#if 0
         /* TODO: Save auth recod into database or create new auth module */
         nua_respond(nh, SIP_401_UNAUTHORIZED, SIPTAG_WWW_AUTHENTICATE_STR(auth), NUTAG_WITH_THIS(nua), TAG_END());
         return _ret;
+#endif
     }
 
     /* Extract "Expires Header" */
