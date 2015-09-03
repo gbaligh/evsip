@@ -86,8 +86,8 @@ void evsip_log_print(const char *UNUSED(file), const char *UNUSED(func), unsigne
 
   va_start(ap, fmt);
   if (!EVSIP_LOG_USE_SYSLOG) {
-    fprintf(stdout, "[%*s%*s]- ", (int)(7 + strlen(evsip_log_level_char[level])/2), evsip_log_level_char[level],
-			 (int)(7 - strlen(evsip_log_level_char[level])/2), "");
+    fprintf(stdout, "\n[%*s%*s]- ", (int)(5 + strlen(evsip_log_level_char[level])/2), evsip_log_level_char[level],
+			 (int)(5 - strlen(evsip_log_level_char[level])/2), "");
   } else {
     syslog(LOG_MAKEPRI(LOG_DAEMON, level), "[%s]- ", evsip_log_level_char[level]);
   }

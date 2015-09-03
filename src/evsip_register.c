@@ -73,7 +73,6 @@ unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *s
         return _ret;
     }
 
-
     /* Extract "Expires Header" */
     if (sip->sip_expires) {
         exptime = sip->sip_expires->ex_delta;
