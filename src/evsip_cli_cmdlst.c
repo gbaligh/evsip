@@ -59,6 +59,8 @@ struct evsip_cli_cmd_str {
   unsigned int flags;					//!< Flags of the commands object.
   unsigned int privilege;				//!< Access right for this command
   unsigned int mode;					//!< Configuration or Status command
+  unsigned int (*exec_f)(void *exec_arg); //!<
+  void *exec_arg; 
 
   struct evsip_cli_cmd_str *parent;	//!< RBTree parent
   struct evsip_cli_cmd_str *left;		//!< RBTree left child
@@ -148,8 +150,6 @@ unsigned int evsip_cli_cmd_init(evsip_cli_cmd_t **pCtx,
     const unsigned int privilege,
     const unsigned int mode)
 {
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Enter: %s", __FUNCTION__);
-
   struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)0;
 
   _pCmdCtx = su_alloc(evSipGlobCtx->memPage, sizeof (struct evsip_cli_cmd_str));
@@ -181,14 +181,11 @@ unsigned int evsip_cli_cmd_init(evsip_cli_cmd_t **pCtx,
 
   *pCtx = _pCmdCtx;
 
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "End.");
   return (EVSIP_SUCCESS);
 }
 
-unsigned int evsip_cli_cmd_register(evsip_cli_cmd_t *pCmdCtx)
+unsigned int evsip_cli_cmd_register(evsip_cli_cmd_t *pCmdCtx, unsigned int (*exec_f)(void *), void *arg)
 {
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Enter: %s", __FUNCTION__);
-
   struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)pCmdCtx;
   struct evsip_cli_cmd_str *_pCmdOldCtx = (struct evsip_cli_cmd_str *)0;
 
@@ -202,17 +199,28 @@ unsigned int evsip_cli_cmd_register(evsip_cli_cmd_t *pCmdCtx)
     return (EVSIP_ERROR_INVALID_HANDLE);
   }
 
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Register %s", _pCmdCtx->cmd);
+  if (exec_f == NULL) {
+    EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "callback function not set");
+    return (EVSIP_ERROR_INVALID_HANDLE);
+  }
+
+  _pCmdCtx->exec_f = exec_f;
+  _pCmdCtx->exec_arg = arg;
+
+  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Registering <%s:%p> command into tree(%p)",
+       _pCmdCtx->cmd, _pCmdCtx, pGlobCmdCtxTree);
+
   evsip_cmd_rbtree_insert(&pGlobCmdCtxTree, _pCmdCtx, &_pCmdOldCtx);
 
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "End.");
+  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Registered <%s:%p> command into tree(%p) with old(%p)",
+       _pCmdCtx->cmd, _pCmdCtx, pGlobCmdCtxTree, _pCmdOldCtx);
+
+
   return (EVSIP_SUCCESS);
 }
 
 unsigned int evsip_cli_cmd_find(const char *pCmd, evsip_cli_cmd_t **pCmdCtx)
 {
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Enter: %s", __FUNCTION__);
-
   struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)0;
 
   if (pCmdCtx == (evsip_cli_cmd_t **)0) {
@@ -225,7 +233,7 @@ unsigned int evsip_cli_cmd_find(const char *pCmd, evsip_cli_cmd_t **pCmdCtx)
     return EVSIP_ERROR_BADPARAM;
   }
 
-  for (_pCmdCtx = evsip_cmd_rbtree_first(pGlobCmdCtxTree); _pCmdCtx; _pCmdCtx = _pCmdCtx->left) {
+  for (_pCmdCtx = pGlobCmdCtxTree; _pCmdCtx; _pCmdCtx = _pCmdCtx->left) {
     if (_pCmdCtx->magic != EVSIP_CMD_MAGIC) {
       EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "address %p [%ud != %ud]", _pCmdCtx->magic, EVSIP_CMD_MAGIC);
       continue;
@@ -236,7 +244,6 @@ unsigned int evsip_cli_cmd_find(const char *pCmd, evsip_cli_cmd_t **pCmdCtx)
     }
   }
 
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "End.");
   return (EVSIP_ERROR_NOT_FOUND);
 }
 
@@ -273,25 +280,26 @@ unsigned int evsip_cli_cmd_execute(evsip_cli_cmd_t *pCmdCtx)
     return EVSIP_ERROR_INVALID_HANDLE;
   }
 
-  fprintf(stderr, "Not implemented yet: (%s[%s])\n", _pCmdCtx->cmd, _pCmdCtx->help_msg);
+  if ( _pCmdCtx->exec_f) {
+    _pCmdCtx->exec_f(_pCmdCtx->exec_arg);
+  } else
+    fprintf(stderr, "==> Callbacks for commands are not implemented yet: %s[%s]\n", _pCmdCtx->cmd, _pCmdCtx->help_msg);
 
   return EVSIP_SUCCESS;
 }
 
 void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx)
 {
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Enter: %s", __FUNCTION__);
-
   struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)pCmdCtx;
 
   if (_pCmdCtx == (struct evsip_cli_cmd_str *)0) {
     EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "INVALID handler");
-    goto EXIT;
+    return;
   }
 
   if (_pCmdCtx->magic != EVSIP_CMD_MAGIC) {
     EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "address %p [%ud != %ud]", _pCmdCtx->magic, EVSIP_CMD_MAGIC);
-    goto EXIT;
+    return;
   }
 
   evsip_cmd_rbtree_remove(&pGlobCmdCtxTree, _pCmdCtx);
@@ -300,8 +308,42 @@ void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx)
   su_free(evSipGlobCtx->memPage, _pCmdCtx->help_msg);
   memset(_pCmdCtx, 0, sizeof (struct evsip_cli_cmd_str));
   su_free(evSipGlobCtx->memPage, _pCmdCtx);
-EXIT:
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "End.");
+}
+
+static unsigned int evsip_cli_cmd_help_clbk(void *pRef)
+{
+  struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)0;
+
+  for (_pCmdCtx = pGlobCmdCtxTree; _pCmdCtx; _pCmdCtx = _pCmdCtx->left) {
+    if (_pCmdCtx->magic != EVSIP_CMD_MAGIC) {
+      EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "address %p [%ud != %ud]", _pCmdCtx->magic, EVSIP_CMD_MAGIC);
+      continue;
+    }
+    
+    /* TODO: CLI API to print messages */
+    printf("\t%s: %s\n", _pCmdCtx->cmd, _pCmdCtx->help_msg);
+  }
+
+  return EVSIP_SUCCESS;
+}
+
+
+unsigned int evsip_cli_cmd_register_help_cmd()
+{
+  unsigned int _ret = EVSIP_SUCCESS;
+  evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
+
+  _ret = evsip_cli_cmd_init(&_pCmdCtx, "help", "Help and list all available commands", 1, 1);
+  if ( _ret != EVSIP_SUCCESS) {
+    return _ret;
+  }
+
+  _ret = evsip_cli_cmd_register(_pCmdCtx, evsip_cli_cmd_help_clbk, (void*)0);
+  if (_ret != EVSIP_SUCCESS) {
+    return _ret;
+  }
+
+  return (EVSIP_SUCCESS);
 }
 
 //vim: noai:ts=2:sw=2

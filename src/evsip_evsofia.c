@@ -19,14 +19,14 @@
  * @param[in] tags Sofia-Sip available TAGS in this SIP message
  */
 void evsip_evsofia_main(nua_event_t   event,
-    int           status,
-    char const   *phrase,
-    nua_t        *nua,
-    nua_magic_t  *magic,
-    nua_handle_t *nh,
-    nua_hmagic_t *hmagic,
-    sip_t const  *sip,
-    tagi_t        tags[])
+      int           status,
+      char const   *phrase,
+      nua_t        *nua,
+      nua_magic_t  *magic,
+      nua_handle_t *nh,
+      nua_hmagic_t *hmagic,
+      sip_t const  *sip,
+      tagi_t        tags[])
 {
   EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "[%s] event from SofiaSip"
       " - status:%d"
@@ -39,12 +39,12 @@ void evsip_evsofia_main(nua_event_t   event,
 		nua_event_name(event),
       status, phrase, nua, magic, nh, hmagic, sip);
 
-  if (sip) {
+   if (sip) {
       const sip_from_t *pFromHeader;
-    tl_gets(tags,
+      tl_gets(tags,
             SIPTAG_FROM_REF(pFromHeader),
             TAG_END());
-  }
+   }
 
   switch (event) {
     case nua_i_register:
@@ -87,7 +87,7 @@ void evsip_evsofia_main(nua_event_t   event,
       EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "unknown/not handled event %d:%s\n", event, phrase);
       //nua_respond(nh, status, phrase, TAG_END());
       break;
-  }
+   }
 }
 
 //vim: noai:ts=2:sw=2
