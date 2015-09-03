@@ -76,22 +76,6 @@ struct evsip_cli_ctx_str evsip_cli_ctx = {
 };
 
 
-#if 0
-static int evsip_cli_help_cmd(const char *cmd)
-{
-  EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_DEBUG, "Command handler.(%s)", cmd);
-  return (EVSIP_SUCCESS);
-}
-#endif
-
-#if 0
-static int evsip_cli_quit_cmd(const char *cmd)
-{
-  su_root_break(evSipGlobCtx->rootEventLoop);
-  return (EVSIP_SUCCESS);
-}
-#endif
-
 /**
  * Write prompt char to 'fdout', and write the buffer continent if 'clean' is not set.
  *
