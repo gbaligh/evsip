@@ -5,9 +5,6 @@
 #include "evsip_log.h"
 #include "evsip_types.h"
 
-
-
-
 static unsigned int evsip_register_cli_cmds();
 
 /**
@@ -15,7 +12,6 @@ static unsigned int evsip_register_cli_cmds();
  *
  * @return
  * EVSIP_SUCCESS
- * EVSIP_ERROR_OUTOFRESOURCES
  * EVSIP_ERROR_OUTOFRESOURCES
  */
 unsigned int evsip_init()
@@ -107,7 +103,6 @@ unsigned int evsip_stop()
    if (evSipGlobCtx->nua) {
       nua_shutdown(evSipGlobCtx->nua);
    }
-   //su_root_break(evSipGlobCtx->rootEventLoop);
 
    return (_ret);
 }
@@ -117,14 +112,6 @@ unsigned int evsip_stop()
  */
 void evsip_deinit()
 {
-   if (evSipGlobCtx->nua) {
-      nua_shutdown(evSipGlobCtx->nua);
-      //nua_destroy(evSipGlobCtx->nua);
-      //evSipGlobCtx->nua = (nua_t *)0;
-   }
-
-   su_root_break(evSipGlobCtx->rootEventLoop);
-
    if (evSipGlobCtx->rootEventLoop != (su_root_t *)0) {
       su_root_destroy(evSipGlobCtx->rootEventLoop);
       evSipGlobCtx->rootEventLoop = (su_root_t *)0;

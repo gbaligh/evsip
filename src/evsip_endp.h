@@ -30,7 +30,7 @@ unsigned int evsip_endp_create(evsip_endp_t **pEndp);
  * @param[in] pEndp
  * @return
  */
-unsigned int evsip_endp_attach(evsip_endp_t *pEndp);
+unsigned int evsip_endp_add(evsip_endp_t *pEndp);
 
 /**
  *
@@ -44,7 +44,7 @@ unsigned int evsip_endp_isAttached(evsip_endp_t *pEndp);
  * @param[in] pEndp
  * @return
  */
-unsigned int evsip_endp_dettach(evsip_endp_t *pEndp);
+unsigned int evsip_endp_extract(evsip_endp_t *pEndp);
 
 /**
  *
@@ -73,7 +73,7 @@ unsigned int evsip_endp_findByIpv4(const char *pIpv4, evsip_endp_t **pEndp);
 /**
  * @brief Print all cached @ref evsip_endp_t "Endp".
  *
- * Write to console the cached list of
+ * Write to console the cached list of endpoints
  */
 void evsip_endp_dumpList();
 

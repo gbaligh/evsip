@@ -113,7 +113,6 @@ int main(int argc, char *argv[])
         goto LEAVE_ERROR;
     }
 
-
     _ret = evsip_cli_start();
     if (_ret != EVSIP_SUCCESS) {
         EVSIP_LOG(EVSIP_MAIN, EVSIP_LOG_ERROR, "Can not initialize CLI");
@@ -144,7 +143,7 @@ LEAVE_ERROR:
     evsip_cli_deinit();
     evsip_config_deinit(evSipGlobCtx->pEvSipConfigCtx);
     evsip_log_deinit();
-    //evsip_deinit();
+		evsip_deinit();
     return (EXIT_FAILURE);
 }
 

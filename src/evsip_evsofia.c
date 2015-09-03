@@ -36,7 +36,7 @@ void evsip_evsofia_main(nua_event_t   event,
       " - handler:%p"
       " - handler magic: %p"
       " - sip:%p",
-		nua_event_name(event),
+			nua_event_name(event),
       status, phrase, nua, magic, nh, hmagic, sip);
 
    if (sip) {
@@ -48,13 +48,14 @@ void evsip_evsofia_main(nua_event_t   event,
 
   switch (event) {
     case nua_i_register:
-		EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "REGISTER received");
+			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "REGISTER received");
       evsip_register_handler(nua, nh, sip, tags);
       break;
 
     case nua_i_invite:
-		EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "INVITE received");
+			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "INVITE received");
 		break;
+
     case nua_i_update:
     case nua_i_ack:
     case nua_r_bye:
@@ -62,12 +63,11 @@ void evsip_evsofia_main(nua_event_t   event,
       break;
 
     case nua_i_state:
-		EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "state changed event %d:%s\n", event, phrase);
+			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "state changed event %d:%s\n", event, phrase);
       break;
 
     case nua_i_error:
-      //nua_handle_destroy(nh);
-		EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "error event %d:%s\n", event, phrase);
+			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "error event %d:%s\n", event, phrase);
       break;
 
     case nua_r_respond:
@@ -75,8 +75,6 @@ void evsip_evsofia_main(nua_event_t   event,
       break;
 
     case nua_r_shutdown:
-      //evsip_deinit();
-      //su_root_break(evSipGlobCtx->rootEventLoop);
       break;
 
     case nua_r_set_params:
@@ -85,7 +83,6 @@ void evsip_evsofia_main(nua_event_t   event,
 
     default:
       EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "unknown/not handled event %d:%s\n", event, phrase);
-      //nua_respond(nh, status, phrase, TAG_END());
       break;
    }
 }

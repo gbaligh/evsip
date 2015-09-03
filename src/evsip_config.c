@@ -45,11 +45,11 @@ enum evsip_config_type_enum {
  */
 struct evsip_config_name_ptr_mapping_str {
   /** Option name */
-  const char 									*name;
+	const char *name;
   /** Value type of the option to parse */
-  enum evsip_config_type_enum					valueType;
+	enum evsip_config_type_enum valueType;
   /** Offset of mapped attribute in the configuration Object */
-  size_t										offset;
+	size_t offset;
 } evsip_config_mapping[] = {
   {"local_ip_address",  EVSIP_CONIFG_TYPE_STRING64,  offsetof(struct evsip_config_str, localIpAddress)},
   {"local_port",        EVSIP_CONIFG_TYPE_INTEGER,   offsetof(struct evsip_config_str, localPort)},
@@ -140,7 +140,7 @@ static unsigned int evsip_config_keyval_handler(struct evsip_config_str *_pEvSip
       return (EVSIP_SUCCESS);
     }
   }
-  return (EVSIP_ERROR_UNKNOWN);
+	return EVSIP_ERROR_UNKNOWN;
 }
 
 /**
@@ -206,7 +206,7 @@ unsigned int evsip_config_start_parse(evsip_config_t *pEvSipConfigCtx)
     }
   }
 
-  return (EVSIP_SUCCESS);
+	return EVSIP_SUCCESS;
 }
 
 /**
@@ -237,7 +237,7 @@ unsigned int evsip_config_init(evsip_config_t *pEvSipConfigCtx, const char *pFil
 
   strcpy(_pEvSipConfigCtx->userAgent, EVSIP_CONFIG_DEF_USRAGENT);
 
-  return (EVSIP_SUCCESS);
+	return EVSIP_SUCCESS;
 }
 
 /**
@@ -259,7 +259,7 @@ unsigned int evsip_config_deinit(evsip_config_t *pEvSipConfigCtx)
 
   fclose(_pEvSipConfigCtx->fd);
 
-  return (EVSIP_SUCCESS);
+	return EVSIP_SUCCESS;
 }
 
 //vim: noai:ts=2:sw=2

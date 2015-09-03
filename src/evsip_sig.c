@@ -28,6 +28,11 @@ static void evsip_sig_handler(int signum)
     EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using basic handler", signum);
 }
 
+/**
+ * @brief evsip_sig_task_clbk
+ * @param pRef
+ * @return
+ */
 static int evsip_sig_task_clbk(void *pRef)
 {
 	su_root_break(pEvSipSigCtx->root);
@@ -46,7 +51,8 @@ static void evsip_sig_sigaction(int signum, siginfo_t *pInfo, void *pCtx)
 	 int _retVal = 0;
     EVSIP_UNUSED_ARG(pInfo && pCtx);
     EVSIP_LOG(EVSIP_SIG, EVSIP_LOG_DEBUG, "SIGNAL %d caught using advanced signal handler", signum);
-	 su_task_execute(pEvSipSigCtx->task, evsip_sig_task_clbk, (void *)0, &_retVal);
+		/* execute the callback function in the main root thread */
+		su_task_execute(pEvSipSigCtx->task, evsip_sig_task_clbk, (void *)0, &_retVal);
 }
 
 /**
@@ -98,10 +104,9 @@ unsigned int evsip_sig_init(su_root_t *pRoot, su_home_t *pHome)
     pEvSipSigCtx->action = pEvSipSigAct;
     pEvSipSigCtx->home = pHome;
     pEvSipSigCtx->root = pRoot;
-	 pEvSipSigCtx->task = su_root_task(pRoot);
+		pEvSipSigCtx->task = su_root_task(pRoot);
 
-
-    return (EVSIP_SUCCESS);
+		return EVSIP_SUCCESS;
 }
 
 /**
@@ -109,8 +114,7 @@ unsigned int evsip_sig_init(su_root_t *pRoot, su_home_t *pHome)
  */
 void evsip_sig_deinit()
 {
-
-
+	/* nothing to do right now */
 }
 
 //vim: noai:ts=2:sw=2
