@@ -135,7 +135,7 @@ unsigned int evsip_cli_cmd_clbk(void *pRef)
    unsigned int index = *((unsigned int*)pRef);
    switch (index) {
       case 0:
-         su_root_break(evSipGlobCtx->rootEventLoop);
+				 evsip_stop();
          break;
       default:
          break;

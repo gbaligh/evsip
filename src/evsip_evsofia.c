@@ -75,6 +75,7 @@ void evsip_evsofia_main(nua_event_t   event,
       break;
 
     case nua_r_shutdown:
+			su_root_break(evSipGlobCtx->rootEventLoop);
       break;
 
     case nua_r_set_params:

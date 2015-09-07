@@ -69,6 +69,8 @@ unsigned int evsip_cli_cmd_execute(evsip_cli_cmd_t *pCmdCtx);
  */
 void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx);
 
+void evsip_cli_cmd_destroy_all();
+
 
 unsigned int evsip_cli_cmd_register_help_cmd(void);
 

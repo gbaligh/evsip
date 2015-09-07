@@ -125,12 +125,6 @@ int main(int argc, char *argv[])
         goto LEAVE_ERROR;
     }
 
-    _ret = evsip_stop();
-    if (_ret != EVSIP_SUCCESS) {
-        EVSIP_LOG(EVSIP_MAIN, EVSIP_LOG_ERROR, "Problem during EVSIP stop");
-        goto LEAVE_ERROR;
-    }
-
     _ret = evsip_cli_stop();
     if (_ret != EVSIP_SUCCESS) {
         EVSIP_LOG(EVSIP_MAIN, EVSIP_LOG_ERROR, "Problem during CLI stop");
