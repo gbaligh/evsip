@@ -1,3 +1,5 @@
-install: make get-deps
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install libsofia-sip-ua-dev libcunit1-dev check
 language: c
 compiler: gcc
