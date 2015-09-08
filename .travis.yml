@@ -13,4 +13,4 @@ before_install:
   - bash install-sofiasip
 script: 
   -  ls -R $HOME/sofiasip
-  - ./autogen.sh && ./configure && make
+  - ./autogen.sh && PKG_CONFIG_PATH=$HOME/sofiasip/lib/pkgconfig ./configure && make
