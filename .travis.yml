@@ -10,7 +10,7 @@ cache:
 language: c
 compiler: gcc
 before_install:
-  - bash install-sofiasip.
+  - bash install-sofiasip
 script: 
   -  ls -R $HOME/sofiasip
   - ./autogen.sh && ./configure && make
