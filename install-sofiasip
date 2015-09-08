@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 # check to see if Sofia-Sip folder is empty
-if [ ! -d "$HOME/sofiasip" ]; then
+if [ ! -d "$HOME/sofiasip/lib" ]; then
   wget http://downloads.sourceforge.net/project/sofia-sip/sofia-sip/1.12.11/sofia-sip-1.12.11.tar.gz
   tar -xzvf sofia-sip-1.12.11.tar.gz
   cd sofia-sip-1.12.11 && ./configure --prefix=$HOME/sofiasip && make && make install
