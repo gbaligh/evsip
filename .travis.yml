@@ -4,6 +4,13 @@ addons:
     - libsofia-sip-ua-dev 
     - libcunit1-dev
     - check
+cache:
+  directories:
+  - $HOME/sofiasip
 language: c
 compiler: gcc
-script: ./autogen.sh && ./configure && make
+before_install:
+  - bash install-sofiasip.
+script: 
+  -  ls -R $HOME/sofiasip
+  - ./autogen.sh && ./configure && make
