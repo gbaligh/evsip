@@ -1,4 +1,4 @@
-https://travis-ci.org/cmoibal/evsip.svg?branch=master
+[![Build Status](https://travis-ci.org/cmoibal/evsip.svg?branch=master)](https://travis-ci.org/cmoibal/evsip)
 
 #EasyVision SIP Server
 
