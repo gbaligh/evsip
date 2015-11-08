@@ -1,4 +1,16 @@
+env:
+  global:
+   - secure: "TactdBotSW+DPASkSECp1jJfhKxAm0kIDDvCi+wZy2lx4il0DuAINt0ej1BpAXWWpcHgmcBu+TWmhN9ELzSPdkxSnuHplpB8hNDCHkjGaKBI4Ai0nJbBjzIKDlxGJmnqNVaQEmPhZ0BZJSa0I0VhkrT12Kvq0X99wxBxxwhCy1uwUKNab/RAL7jlokizTgIuaUFf2YY33J+I3V1kuBq4dMcn3Kx51u5amlbB9pzzRGM19OOp4tVIA5rkVNwPjRaIc1AUKIpJmilbwbm/hRzk/1Dg3bZFv1Q+zA7H/7LZaGRwoJUKlv4m0dtjqnowtwnn1ppDybopD1U5LVobWzcUKpq/hQXWCQUwcJH2fytu33EJVi1czj9ydESPTQw9hLp7ZLM6vQsD3xzWyGR7PDDLYO8OfuuKGCMQPsay+poZdfpNjIG6lF+TVTUSQs0+I35QaEBMhgHWuVLEnycg5WF521Bq8CWPLs7b+iOM6XaIX/3UXGnhQ6kpIbU+gnunoWq7ZvmJh7EfYvmc+suwmuf1HPfnV7BU2sCtMQLTRTJiRz5AQ0CCK/TgdoegpkRdGRRZ7TFQKSUHao0ZWsjPYd91B8rOvAYFpg6AmZhxF9OD9VIVZ2T7wUEmUcLnnlQj/S5TakZQ7xvpJTyHEcwrLTghOtjzXnrOYJ5cWFueoiRWYkw="
+
 addons:
+  coverity_scan:
+    project:
+      name: "cmoibal/evsip"
+      description: "Build submitted via Travis CI"
+    notification_email: gasmibal@gmail.com
+    build_command_prepend: "./configure; make clean"
+    build_command:   "make -j 4"
+    branch_pattern: coverity_scan
   apt:
     packages:
     - libsofia-sip-ua-dev 
