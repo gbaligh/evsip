@@ -8,9 +8,9 @@ addons:
       name: "cmoibal/evsip"
       description: "Build submitted via Travis CI"
     notification_email: gasmibal@gmail.com
-    build_command_prepend: "./configure; make clean"
-    build_command:   "make -j 4"
-    branch_pattern: coverity_scan
+    build_command_prepend: "./autogen.sh && PKG_CONFIG_PATH=$HOME/sofiasip/lib/pkgconfig ./configure && make clean"
+    build_command:   "make -j 2"
+    branch_pattern: master
   apt:
     packages:
     - libsofia-sip-ua-dev 
