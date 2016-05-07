@@ -23,7 +23,7 @@ START_TEST (test1)
   
   ck_assert(evsip_mem_nrefs(pInt) == 1);
 
-  for (nbRef == evsip_mem_nrefs(pInt);
+  for (nbRef = evsip_mem_nrefs(pInt);
       nbRef < 100;
       nbRef ++) {
     ck_assert(evsip_mem_ref(pInt) != (void *)0);

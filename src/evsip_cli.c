@@ -1,3 +1,23 @@
+/*
+EasyVision SIP Server (EvSip), a test Server for SIP protocol.
+Copyright (C) 2016  Baligh Guesmi
+
+This file is part of EvSip.
+
+EvSip is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+EvSip is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 /**
  * @file evsip_cli.c
  * @brief
@@ -117,7 +137,7 @@ static int evsip_cli_input_handler(	su_root_magic_t *Ctx, su_wait_t *Wait, su_wa
   if (size > 0) {
     switch (c) {
       case '?':
-        write(evsip_cli_ctx.outFd, "\n", 1);
+        write(evsip_cli_ctx.outFd, "\n", 1); 
         evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
         break;
       case '\t': {

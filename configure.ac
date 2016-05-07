@@ -12,8 +12,6 @@ AM_SILENT_RULES
 
 # Checks for programs
 AC_PROG_CC
-AM_PROG_LEX
-AC_PROG_YACC
 
 # Doxygen support
 DX_HTML_FEATURE(ON)
