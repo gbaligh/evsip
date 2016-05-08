@@ -281,7 +281,7 @@ unsigned int evsip_cli_stop()
  */
 void evsip_cli_deinit()
 {
-	evsip_cli_cmd_destroy_all();
+  evsip_cli_cmd_destroy_all();
 
   /* if the TTY was changed, retrive last conf and set it again */
   if (evsip_cli_ctx.state & EVSIP_CLI_STATE_INIT)

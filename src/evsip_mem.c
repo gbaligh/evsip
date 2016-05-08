@@ -24,6 +24,8 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include "evsip_mem.h"
 #include "evsip_types.h"
 
+#define EVSIP_MEM_MAGIC  0x15170516
+
 /** Defines a reference-counting memory object */
 struct evsip_mem_str {
   su_home_t *home; /**< SOFIA-SIP memory manager */
@@ -56,7 +58,7 @@ unsigned int evsip_mem_init(su_home_t *h)
 
   evsip_memCtx->home = h;
 
-  return (EVSIP_SUCCESS);
+  return EVSIP_SUCCESS;
 }
 
 /**
@@ -69,7 +71,7 @@ unsigned int evsip_mem_init(su_home_t *h)
  */
 void *evsip_mem_alloc(size_t size, evsip_mem_destroy_h *dh)
 {
-  struct evsip_memHeader_str *mh;
+  struct evsip_memHeader_str *mh = (struct evsip_memHeader_str *)0;
 
   mh = su_alloc(evsip_memCtx->home, sizeof(struct evsip_memHeader_str) + size);
   if (!mh)
@@ -77,6 +79,7 @@ void *evsip_mem_alloc(size_t size, evsip_mem_destroy_h *dh)
 
   mh->nbRefs = 1;
   mh->dh = dh;
+  mh->magic = EVSIP_MEM_MAGIC;
 
   return ((void *)(mh + 1));
 }
@@ -91,15 +94,15 @@ void *evsip_mem_alloc(size_t size, evsip_mem_destroy_h *dh)
  */
 void *evsip_mem_zalloc(size_t size, evsip_mem_destroy_h *dh)
 {
-	void *p;
+  void *p = NULL;
 
-	p = evsip_mem_alloc(size, dh);
-	if (!p)
-		return NULL;
+  p = evsip_mem_alloc(size, dh);
+  if (!p)
+    return NULL;
 
-	memset(p, 0, size);
+  memset(p, 0, size);
 
-	return p;
+  return p;
 }
 
 /**
@@ -111,16 +114,20 @@ void *evsip_mem_zalloc(size_t size, evsip_mem_destroy_h *dh)
  */
 void *evsip_mem_ref(void *data)
 {
-	struct evsip_memHeader_str *m = (struct evsip_memHeader_str *)0;
+  struct evsip_memHeader_str *m = (struct evsip_memHeader_str *)0;
 
-	if (!data)
-		return NULL;
+  if (!data)
+    return NULL;
 
-	m = ((struct evsip_memHeader_str *)data) - 1;
+  m = ((struct evsip_memHeader_str *)data) - 1;
 
-	++m->nbRefs;
+  if (m->magic != EVSIP_MEM_MAGIC) 
+    return NULL;
+  
 
-	return data;
+  ++m->nbRefs;
+
+  return data;
 }
 
 /**
@@ -130,29 +137,33 @@ void *evsip_mem_ref(void *data)
  *
  * @param[in] data Memory object
  *
- * @return Always NULL
+ * @return NULL if there is no more reference.
  */
 void *evsip_mem_deref(void *data)
 {
-	struct evsip_memHeader_str *m = (struct evsip_memHeader_str *)0;
+  struct evsip_memHeader_str *m = (struct evsip_memHeader_str *)0;
 
-	if (!data)
-		return NULL;
+  if (!data)
+    return NULL;
 
-	m = ((struct evsip_memHeader_str *)data) - 1;
+  m = ((struct evsip_memHeader_str *)data) - 1;
 
-	if (--m->nbRefs > 0)
-		return (void *)(m + 1);
+  if (m->magic != EVSIP_MEM_MAGIC) 
+    return NULL;
+   
 
-	if (m->dh)
-		m->dh(data);
+  if (--m->nbRefs > 0)
+    return (void *)(m + 1);
 
-	if (m->nbRefs > 0)
-		return (void *)(m + 1);
+  if (m->dh)
+    m->dh(data);
 
-	su_free(evsip_memCtx->home, m);
+  if (m->nbRefs > 0)
+    return (void *)(m + 1);
 
-	return NULL;
+  su_free(evsip_memCtx->home, m);
+
+  return NULL;
 }
 
 /**
@@ -164,14 +175,17 @@ void *evsip_mem_deref(void *data)
  */
 uint32_t evsip_mem_nrefs(const void *data)
 {
-	struct evsip_memHeader_str *m = (struct evsip_memHeader_str *)0;
+  struct evsip_memHeader_str *m = (struct evsip_memHeader_str *)0;
 
-	if (!data)
-		return 0;
+  if (!data)
+    return 0;
 
-	m = ((struct evsip_memHeader_str *)data) - 1;
-
-	return m->nbRefs;
+  m = ((struct evsip_memHeader_str *)data) - 1;
+  
+  if (m->magic != EVSIP_MEM_MAGIC)
+    return 0;
+  
+  return m->nbRefs;
 }
 
 //vim: noai:ts=2:sw=2

@@ -7,36 +7,19 @@
 #include <evsip_mem.h>
 
 
-START_TEST (test1)
-  
+START_TEST (mem_init)
+{  
   su_home_t home[1];
   int *pInt = (int *)0;
-  unsigned int nbRef = 0;
 
   ck_assert(evsip_mem_init(NULL) != 0);
-  
   ck_assert(evsip_mem_init(home) == 0);
 
-  pInt = evsip_mem_alloc(sizeof(int), NULL);
-  
-  ck_assert(pInt != (int *)0);
-  
+  pInt = evsip_mem_alloc(sizeof(int), NULL); 
+  ck_assert_ptr_ne(pInt, (int *)0);
   ck_assert(evsip_mem_nrefs(pInt) == 1);
-
-  for (nbRef = evsip_mem_nrefs(pInt);
-      nbRef < 100;
-      nbRef ++) {
-    ck_assert(evsip_mem_ref(pInt) != (void *)0);
-    ck_assert(evsip_mem_nrefs(pInt) > nbRef);
-  }
-
-  while (nbRef) {
-    ck_assert(evsip_mem_deref(pInt) == pInt);
-    --nbRef;
-  }
-  
-  ck_assert(evsip_mem_deref(pInt) == (void *)0);
-
+  ck_assert_ptr_eq(evsip_mem_deref(pInt), (void *)0);
+}
 END_TEST
 
 Suite *mem_suite(void)
@@ -44,12 +27,12 @@ Suite *mem_suite(void)
   Suite *s = (Suite *)0;
   TCase *tc_core = (TCase *)0;
 
-  s = suite_create("Memory Manager");
+  s = suite_create("mem");
   if (s) {
     /* Core test */
-    tc_core = tcase_create("Core");
+    tc_core = tcase_create("core");
     if (tc_core) {
-      tcase_add_test(tc_core, test1);
+      tcase_add_test(tc_core, mem_init);
       suite_add_tcase(s, tc_core);
     }
   }
@@ -68,10 +51,11 @@ int main(int argc, char *argv[])
   if (s) {
     sr = srunner_create(s);
     if (sr) {
-      srunner_set_fork_status(sr, CK_FORK);
-      srunner_run_all(sr, CK_VERBOSE);
+      srunner_set_log (sr, "-");
+      srunner_set_fork_status(sr, CK_NOFORK);
+      srunner_run_all(sr, CK_NORMAL);
       number_failed = srunner_ntests_failed(sr);
-      srunner_print(sr, CK_VERBOSE);
+//      srunner_print(sr, CK_VERBOSE);
       srunner_free(sr);
     }
   }

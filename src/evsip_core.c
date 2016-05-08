@@ -154,7 +154,7 @@ unsigned int evsip_cli_cmd_clbk(void *pRef)
    unsigned int index = *((unsigned int*)pRef);
    switch (index) {
       case 0:
-				 evsip_stop();
+	      evsip_stop();
          break;
       default:
          break;
@@ -182,7 +182,6 @@ static unsigned int evsip_register_cli_cmds()
    }
 
    return (EVSIP_SUCCESS);
-
 }
 
 //vim: noai:ts=2:sw=2

@@ -110,7 +110,7 @@ unsigned int evsip_endp_create(evsip_endp_t **pEndp)
 
   *pEndp = _pEndp;
 
-	return EVSIP_SUCCESS;
+  return EVSIP_SUCCESS;
 }
 
 /**
@@ -124,7 +124,7 @@ unsigned int evsip_endp_add(evsip_endp_t *pEndp)
 
 	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
 
-	if (gpEndpList == (su_vector_t *) 0) {
+  if (gpEndpList == (su_vector_t *) 0) {
 		gpEndpList = su_vector_create(_pEndp->home, evsip_endp_destroy);
 		if (gpEndpList == (su_vector_t *) 0) {
 			return EVSIP_ERROR_OUTOFRESOURCES;
@@ -136,7 +136,7 @@ unsigned int evsip_endp_add(evsip_endp_t *pEndp)
 		return EVSIP_ERROR_INSUFFICIENT_BUFFER;
   }
 
-	_pEndp->flags |= EVSIP_ENDP_FLAG_ADDED;
+  _pEndp->flags |= EVSIP_ENDP_FLAG_ADDED;
 
   return EVSIP_SUCCESS;
 }
@@ -151,9 +151,9 @@ unsigned int evsip_endp_extract(evsip_endp_t *pEndp)
   int _i = 0;
   struct evsip_endp_ctx *_pEndp = (struct evsip_endp_ctx *)pEndp;
 
-	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
+  EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
 
-	if (!(_pEndp->flags & EVSIP_ENDP_FLAG_ADDED)) {
+  if (!(_pEndp->flags & EVSIP_ENDP_FLAG_ADDED)) {
     EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_WARNING, "Endp(%p) not in list", _pEndp);
     return EVSIP_ERROR_NOT_FOUND;
   }
@@ -180,11 +180,11 @@ unsigned int evsip_endp_setContact(evsip_endp_t *pEndp, const char *pContact)
 {
   struct evsip_endp_ctx *_pEndp = (struct evsip_endp_ctx *)pEndp;
 
-	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
+  EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
 
-	_pEndp->info.contact = su_strdup(_pEndp->home, pContact);
+  _pEndp->info.contact = su_strdup(_pEndp->home, pContact);
 
-	return EVSIP_SUCCESS;
+  return EVSIP_SUCCESS;
 }
 
 /**
@@ -197,11 +197,11 @@ unsigned int evsip_endp_setHostIpv4(evsip_endp_t *pEndp, const char *pIpv4)
 {
   struct evsip_endp_ctx *_pEndp = (struct evsip_endp_ctx *)pEndp;
 
-	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
+  EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
 
-	_pEndp->info.host = su_strdup(_pEndp->home, pIpv4);
+  _pEndp->info.host = su_strdup(_pEndp->home, pIpv4);
 
-	return EVSIP_SUCCESS;
+  return EVSIP_SUCCESS;
 }
 
 /**
@@ -211,14 +211,14 @@ void evsip_endp_dumpList()
 {
   unsigned int _i = 0;
 
-	EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_INFO, "==== Dump Endp list: Number of elements %u ===", su_vector_len(gpEndpList));
+  EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_INFO, "==== Dump Endp list: Number of elements %u ===", su_vector_len(gpEndpList));
   for (_i = 0; _i < su_vector_len(gpEndpList); ++_i) {
     struct evsip_endp_ctx *_pEndpTmp = (struct evsip_endp_ctx *)su_vector_item(gpEndpList, _i);
     if (_pEndpTmp) {
       EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_INFO, "\tEndp[%u]: <sip:%s@%s>", _i, _pEndpTmp->info.contact, _pEndpTmp->info.host);
     }
   }
-	EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_INFO, "==== Dump Endp list: End ===", su_vector_len(gpEndpList));
+  EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_INFO, "==== Dump Endp list: End ===", su_vector_len(gpEndpList));
 }
 
 /**
@@ -231,9 +231,9 @@ unsigned int evsip_endp_isAttached(evsip_endp_t *pEndp)
   unsigned int _i = 0;
   struct evsip_endp_ctx *_pEndp = (struct evsip_endp_ctx *)pEndp;
 
-	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
+  EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
 
-	if (!(_pEndp->flags & EVSIP_ENDP_FLAG_ADDED)) {
+  if (!(_pEndp->flags & EVSIP_ENDP_FLAG_ADDED)) {
     return EVSIP_ERROR_NOT_FOUND;
   }
 
@@ -282,9 +282,9 @@ void evsip_endp_destroy(void *pEndp)
 {
   struct evsip_endp_ctx *_pEndp = (struct evsip_endp_ctx *)pEndp;
 
-	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return, "Error handler Endp");
+  EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return, "Error handler Endp");
 
-	su_home_unref(_pEndp->home);
+  su_home_unref(_pEndp->home);
 }
 
 //vim: noai:ts=2:sw=2

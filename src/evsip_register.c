@@ -144,13 +144,13 @@ unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *s
     }
 
     /* For test, Send "200 OK" */
-		EVSIP_LOG(EVSIP_REG, EVSIP_LOG_DEBUG, "handler(%p): Sending 200OK", nh);
+    EVSIP_LOG(EVSIP_REG, EVSIP_LOG_DEBUG, "handler(%p): Sending 200OK", nh);
     nua_respond(nh, SIP_200_OK, SIPTAG_CONTACT(sip->sip_contact),
                 SIPTAG_EXPIRES_STR((const char *)expbuf),
                 NUTAG_WITH_THIS(nua),
                 TAG_END());
 
-		evsip_endp_dumpList();
+    evsip_endp_dumpList();
 
     return (EVSIP_SUCCESS);
 

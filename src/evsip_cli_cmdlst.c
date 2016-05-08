@@ -302,16 +302,16 @@ void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx)
 
 void evsip_cli_cmd_destroy_all()
 {
-	struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)0;
+  struct evsip_cli_cmd_str *_pCmdCtx = (struct evsip_cli_cmd_str *)0;
 
-	for (_pCmdCtx = pGlobCmdCtxTree; _pCmdCtx; _pCmdCtx = _pCmdCtx->left) {
-		if (_pCmdCtx->magic != EVSIP_CMD_MAGIC) {
-			EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "address %p [%ud != %ud]", _pCmdCtx->magic, EVSIP_CMD_MAGIC);
-			continue;
-		}
-		evsip_cmd_rbtree_remove(&pGlobCmdCtxTree, _pCmdCtx);
-		su_home_unref(_pCmdCtx->home);
-	}
+  for (_pCmdCtx = pGlobCmdCtxTree; _pCmdCtx; _pCmdCtx = _pCmdCtx->left) {
+    if (_pCmdCtx->magic != EVSIP_CMD_MAGIC) {
+      EVSIP_LOG(EVSIP_CLI, EVSIP_LOG_ERROR, "address %p [%ud != %ud]", _pCmdCtx->magic, EVSIP_CMD_MAGIC);
+        continue;
+    }
+    evsip_cmd_rbtree_remove(&pGlobCmdCtxTree, _pCmdCtx);
+    su_home_unref(_pCmdCtx->home);
+  }
 }
 
 static unsigned int evsip_cli_cmd_help_clbk(void *pRef)

@@ -83,8 +83,8 @@ static unsigned int evsip_args(int argc, char *argv[])
  *
  * @param[in] argc
  * @param[in] argv
- * @return 	EXIT_SUCCESS on success
- * 			EXIT_FAILURE on failure
+ * @return EXIT_SUCCESS on success
+ *         EXIT_FAILURE on failure
  */
 int main(int argc, char *argv[])
 {

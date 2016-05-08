@@ -159,7 +159,7 @@ static unsigned int evsip_config_keyval_handler(struct evsip_config_str *_pEvSip
       return (EVSIP_SUCCESS);
     }
   }
-	return EVSIP_ERROR_UNKNOWN;
+  return EVSIP_ERROR_UNKNOWN;
 }
 
 /**
@@ -225,7 +225,7 @@ unsigned int evsip_config_start_parse(evsip_config_t *pEvSipConfigCtx)
     }
   }
 
-	return EVSIP_SUCCESS;
+  return EVSIP_SUCCESS;
 }
 
 /**
@@ -256,7 +256,7 @@ unsigned int evsip_config_init(evsip_config_t *pEvSipConfigCtx, const char *pFil
 
   strcpy(_pEvSipConfigCtx->userAgent, EVSIP_CONFIG_DEF_USRAGENT);
 
-	return EVSIP_SUCCESS;
+  return EVSIP_SUCCESS;
 }
 
 /**
@@ -278,7 +278,7 @@ unsigned int evsip_config_deinit(evsip_config_t *pEvSipConfigCtx)
 
   fclose(_pEvSipConfigCtx->fd);
 
-	return EVSIP_SUCCESS;
+  return EVSIP_SUCCESS;
 }
 
 //vim: noai:ts=2:sw=2
