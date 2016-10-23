@@ -23,6 +23,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include "evsip_cli_cmdlst.h"
 #include "evsip_log.h"
 #include "evsip_types.h"
+#include "evsip_endp.h"
 
 static unsigned int evsip_register_cli_cmds();
 
@@ -95,6 +96,8 @@ unsigned int evsip_start()
       return (EVSIP_ERROR_OUTOFRESOURCES);
    }
 
+   evsip_endp_init();
+
    evsip_register_cli_cmds();
 
    su_root_run(evSipGlobCtx->rootEventLoop);
@@ -153,8 +156,8 @@ unsigned int evsip_cli_cmd_clbk(void *pRef)
 {
    unsigned int index = *((unsigned int*)pRef);
    switch (index) {
-      case 0:
-	      evsip_stop();
+      case 0: /* exit */
+         evsip_stop();
          break;
       default:
          break;

@@ -28,6 +28,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include "evsip_evsofia.h"
 #include "evsip_log.h"
 #include "evsip_types.h"
+#include "evsip_cli_cmdlst.h"
 #include "evsip_endp.h"
 
 /** @brief MAGIC for end point object */
@@ -52,8 +53,8 @@ static su_vector_t *gpEndpList = (su_vector_t *)0;
 
 /** @brief */
 enum {
-	EVSIP_ENDP_FLAG_ADDED	= (1 << 0), /**! To indicate that the object is cached*/
-	EVSIP_ENDP_FLAG_REGISTRED = (1 << 1)
+  EVSIP_ENDP_FLAG_ADDED	= (1 << 0), /**! To indicate that the object is cached*/
+  EVSIP_ENDP_FLAG_REGISTRED = (1 << 1)
 };
 
 /**
@@ -62,8 +63,8 @@ enum {
 struct evsip_endp_ctx {
   /** MAGIC */
   unsigned int magic;
-	/** Memory Pool */
-	su_home_t home[1];
+  /** Memory Pool */
+  su_home_t home[1];
   /** State */
   unsigned int state;
   /** Tools FLAGS */
@@ -79,11 +80,16 @@ struct evsip_endp_ctx {
   } credential;
 };
 
+static unsigned int evsip_register_cli_cmds();
+
 
 unsigned int evsip_endp_init()
 {
+  unsigned int _ret = EVSIP_SUCCESS;
 
-	return EVSIP_SUCCESS;
+  _ret = evsip_register_cli_cmds();
+
+  return _ret;
 }
 
 /**
@@ -99,7 +105,7 @@ unsigned int evsip_endp_create(evsip_endp_t **pEndp)
     return EVSIP_ERROR_BADPARAM;
   }
 
-	_pEndp = (struct evsip_endp_ctx *)su_home_clone(evSipGlobCtx->memPage, sizeof(struct evsip_endp_ctx));
+  _pEndp = (struct evsip_endp_ctx *)su_home_clone(evSipGlobCtx->memPage, sizeof(struct evsip_endp_ctx));
   if (_pEndp == (struct evsip_endp_ctx *)0) {
     return EVSIP_ERROR_OUTOFRESOURCES;
   }
@@ -122,18 +128,18 @@ unsigned int evsip_endp_add(evsip_endp_t *pEndp)
 {
   struct evsip_endp_ctx *_pEndp = (struct evsip_endp_ctx *)pEndp;
 
-	EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
+  EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return EVSIP_ERROR_INVALID_HANDLE, "Error handler Endp");
 
   if (gpEndpList == (su_vector_t *) 0) {
-		gpEndpList = su_vector_create(_pEndp->home, evsip_endp_destroy);
-		if (gpEndpList == (su_vector_t *) 0) {
-			return EVSIP_ERROR_OUTOFRESOURCES;
-		}
-	}
+    gpEndpList = su_vector_create(_pEndp->home, evsip_endp_destroy);
+    if (gpEndpList == (su_vector_t *) 0) {
+      return EVSIP_ERROR_OUTOFRESOURCES;
+    }
+  }
 
-	if (su_vector_append(gpEndpList, _pEndp) != 0) {
-		EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_ERROR, "Endp(%p) could not added", _pEndp->magic, EVSIP_ENDP_MAGIC);
-		return EVSIP_ERROR_INSUFFICIENT_BUFFER;
+  if (su_vector_append(gpEndpList, _pEndp) != 0) {
+    EVSIP_LOG(EVSIP_ENDP, EVSIP_LOG_ERROR, "Endp(%p) could not added", _pEndp->magic, EVSIP_ENDP_MAGIC);
+    return EVSIP_ERROR_INSUFFICIENT_BUFFER;
   }
 
   _pEndp->flags |= EVSIP_ENDP_FLAG_ADDED;
@@ -162,7 +168,7 @@ unsigned int evsip_endp_extract(evsip_endp_t *pEndp)
     struct evsip_endp_ctx *_pEndpTmp = (struct evsip_endp_ctx *)su_vector_item(gpEndpList, _i);
     if ((_pEndpTmp) && (_pEndpTmp == _pEndp)) {
       su_vector_remove(gpEndpList, _i);
-			_pEndp->flags &= ~EVSIP_ENDP_FLAG_ADDED;
+      _pEndp->flags &= ~EVSIP_ENDP_FLAG_ADDED;
       return EVSIP_SUCCESS;
     }
   }
@@ -285,6 +291,31 @@ void evsip_endp_destroy(void *pEndp)
   EVSIP_CTX_CHECK_AND_MAGIC(_pEndp, EVSIP_ENDP_MAGIC, return, "Error handler Endp");
 
   su_home_unref(_pEndp->home);
+}
+
+unsigned int evsip_endp_cmd_dump(void *pRef)
+{
+  evsip_endp_dumpList();  
+  return EVSIP_SUCCESS;
+}
+
+static unsigned int evsip_register_cli_cmds()
+{
+  unsigned int _ret = EVSIP_SUCCESS;
+  evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
+  
+  _ret = evsip_cli_cmd_init(&_pCmdCtx, "dump", "Dump all registred endpoints", 1, 1);
+  if ( _ret != EVSIP_SUCCESS) {
+    return _ret;
+  }
+
+  _ret = evsip_cli_cmd_register(_pCmdCtx, evsip_endp_cmd_dump, (void *)_pCmdCtx);
+  if (_ret != EVSIP_SUCCESS) {
+    evsip_cli_cmd_destroy(_pCmdCtx);
+    return _ret;
+  }
+
+  return _ret;
 }
 
 //vim: noai:ts=2:sw=2

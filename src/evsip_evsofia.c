@@ -22,6 +22,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include "evsip_types.h"
 
 #include "evsip_register.h"
+#include "evsip_invite.h"
 
 /**
  * @brief Sofia-Sip event handler
@@ -55,25 +56,24 @@ void evsip_evsofia_main(nua_event_t   event,
       " - handler:%p"
       " - handler magic: %p"
       " - sip:%p",
-			nua_event_name(event),
+      nua_event_name(event),
       status, phrase, nua, magic, nh, hmagic, sip);
 
    if (sip) {
-      const sip_from_t *pFromHeader;
-      tl_gets(tags,
-            SIPTAG_FROM_REF(pFromHeader),
-            TAG_END());
+      const sip_from_t *pFromHeader = (sip_from_t *)0;
+      tl_gets(tags, SIPTAG_FROM_REF(pFromHeader), TAG_END());
    }
 
   switch (event) {
     case nua_i_register:
-			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "REGISTER received");
+      EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "REGISTER received");
       evsip_register_handler(nua, nh, sip, tags);
       break;
 
     case nua_i_invite:
-			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "INVITE received");
-		break;
+      EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "INVITE received");
+      evsip_invite_handler(nua, nh, sip, tags);
+      break;
 
     case nua_i_update:
     case nua_i_ack:
@@ -82,11 +82,11 @@ void evsip_evsofia_main(nua_event_t   event,
       break;
 
     case nua_i_state:
-			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "state changed event %d:%s\n", event, phrase);
+      EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_DEBUG, "state changed event %d:%s\n", event, phrase);
       break;
 
     case nua_i_error:
-			EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "error event %d:%s\n", event, phrase);
+      EVSIP_LOG(EVSIP_SOFIA, EVSIP_LOG_ERROR, "error event %d:%s\n", event, phrase);
       break;
 
     case nua_r_respond:
@@ -94,7 +94,7 @@ void evsip_evsofia_main(nua_event_t   event,
       break;
 
     case nua_r_shutdown:
-			su_root_break(evSipGlobCtx->rootEventLoop);
+      su_root_break(evSipGlobCtx->rootEventLoop);
       break;
 
     case nua_r_set_params:

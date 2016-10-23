@@ -102,7 +102,8 @@ unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *s
     }
     snprintf(expbuf, sizeof(expbuf), "%ld", exptime);
 
-		EVSIP_LOG(EVSIP_REG, EVSIP_LOG_DEBUG, "handler(%p): Host <%s> is trying to register for <%d> seconds using <%s> contact", nh, contact_host, exptime, sip->sip_contact->m_url->url_user);
+    EVSIP_LOG(EVSIP_REG, EVSIP_LOG_DEBUG, "handler(%p): Host <%s> is trying to register for <%d> seconds using <%s> contact", 
+		    nh, contact_host, exptime, sip->sip_contact->m_url->url_user);
 
     /* TODO: Check if the endp is already registered */
     _ret = evsip_endp_findByIpv4(contact_host, &_pEndp);
@@ -127,19 +128,19 @@ unsigned int evsip_register_handler(nua_t *nua, nua_handle_t *nh, sip_t const *s
 
         _ret = evsip_endp_isAttached(_pEndp);
         if (_ret != EVSIP_SUCCESS) {
-						_ret = evsip_endp_add(_pEndp);
+            _ret = evsip_endp_add(_pEndp);
             if (_ret != EVSIP_SUCCESS) {
                 EVSIP_LOG(EVSIP_REG, EVSIP_LOG_WARNING, "Can not add SIP end point to list.(%d)", _ret);
             }
         }
     }
-		else if (_pEndp != (evsip_endp_t *)0) {
-				/* extract the Endp */
-				_ret = evsip_endp_extract(_pEndp);
+    else if (_pEndp != (evsip_endp_t *)0) {
+        /* extract the Endp */
+        _ret = evsip_endp_extract(_pEndp);
         if (_ret != EVSIP_SUCCESS) {
             EVSIP_LOG(EVSIP_REG, EVSIP_LOG_WARNING, "Can remove SIP end point from list.(%d)", _ret);
         }
-				/* Free */
+        /* Free */
         evsip_endp_destroy(_pEndp);
     }
 

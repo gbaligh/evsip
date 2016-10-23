@@ -137,9 +137,9 @@ static int evsip_cli_input_handler(	su_root_magic_t *Ctx, su_wait_t *Wait, su_wa
   if (size > 0) {
     switch (c) {
       case '?':
-        write(evsip_cli_ctx.outFd, "\n", 1); 
-        evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
-        break;
+                  write(evsip_cli_ctx.outFd, "\n", 1); 
+                  evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
+                  break;
       case '\t': {
                    evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
                    write(evsip_cli_ctx.outFd, "\n", 1);

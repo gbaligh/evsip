@@ -35,6 +35,8 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 typedef struct evsip_endp_ctx evsip_endp_t;
 
+unsigned int evsip_endp_init();
+
 /**
  *
  * @param[in] pEndp

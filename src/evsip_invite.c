@@ -17,31 +17,29 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#include <stdlib.h>
 #include "evsip_glob.h"
+#include "evsip_core.h"
+#include "evsip_evsofia.h"
 #include "evsip_log.h"
 #include "evsip_types.h"
-#include "evsip_mod.h"
-#include <sofia-sip/su_vector.h>
-#include <string.h>
+#include "evsip_endp.h"
+#include "evsip_invite.h"
 
-static su_vector_t *evsip_lmod;
-
-unsigned int evsip_mod_init(evsip_mod_t **mod)
+/**
+ *
+ * @param[in] nua
+ * @param[in] nh
+ * @param[in] sip
+ * @param[in] tags
+ * @return  EVSIP_SUCCESS
+ *          EVSIP_ERROR_BADPARAM
+ */
+unsigned int evsip_invite_handler(nua_t *nua, nua_handle_t *nh, sip_t const *sip, tagi_t tags[])
 {
-   evsip_lmod = su_vector_create();
-   if (evsip_lmod != 0) {
-      return EVISP_ERROR;
-   }
-   return EVSIP_SUCCESS;
+  evsip_endp_dumpList();
+
+  return (EVSIP_SUCCESS);
 }
 
-void evsip_mod_close(evsip_mod_t *mod)
-{
-   if (su_vector_empty(evsip_lmod) != 0) {
-      return;
-   }
-
-   su_vector_destroy(evsip_lmod);
-}
-
+//vim: noai:ts=2:sw=2

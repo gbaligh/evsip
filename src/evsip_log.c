@@ -72,6 +72,9 @@ const char *evsip_log_level_char[EVSIP_LOG_MAX] = {
   "DEBUG",
 };
 
+void __cyg_profile_func_enter(void *this_fn, void *call_site) __attribute__((no_instrument_function));
+void __cyg_profile_func_exit(void *this_fn, void *call_site)  __attribute__((no_instrument_function));
+
 void evsip_log_vprint(void *UNUSED(stream), char const *fmt, va_list ap)
 {
   if (EVSIP_LOG_USE_SYSLOG) {
@@ -99,13 +102,14 @@ unsigned int evsip_log_init()
   return (EVSIP_SUCCESS);
 }
 
-void evsip_log_print(const char *UNUSED(file), const char *UNUSED(func), unsigned int UNUSED(line), unsigned int level, const char *fmt, ...)
+void evsip_log_print(const char *file, const char *func, unsigned int line, unsigned int level, const char *fmt, ...)
 {
   va_list ap;
 
   va_start(ap, fmt);
   if (!EVSIP_LOG_USE_SYSLOG) {
-		fprintf(stdout, "\n[%s] - %s[%d] - ", evsip_log_level_char[level], func, line);
+    if (level != EVSIP_LOG_INFO)
+      fprintf(stdout, "[%s] - %s[%d] - ", evsip_log_level_char[level], func, line);
   } else {
     syslog(LOG_MAKEPRI(LOG_DAEMON, level), "[%s]- ", evsip_log_level_char[level]);
   }
@@ -116,6 +120,16 @@ void evsip_log_print(const char *UNUSED(file), const char *UNUSED(func), unsigne
 void evsip_log_deinit()
 {
   /* Nothing to do */
+}
+
+void __cyg_profile_func_enter(void *this_fn, void *call_site) 
+{
+  //fprintf(stdout, "--> this_fn(%p),call_site(%p)\n", this_fn, call_site);
+}
+
+void __cyg_profile_func_exit(void *this_fn, void *call_site) 
+{
+  //fprintf(stdout, "<-- this_fn(%p),call_site(%p)\n", this_fn, call_site);
 }
 
 //vim: noai:ts=2:sw=2
