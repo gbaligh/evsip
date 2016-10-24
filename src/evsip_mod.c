@@ -25,7 +25,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include <sofia-sip/su_vector.h>
 #include <string.h>
 
-static su_vector_t *evsip_lmod;
+static su_vector_t *evsip_lmod = (su_vector_t *)0;
 
 unsigned int evsip_mod_init(evsip_mod_t **mod)
 {

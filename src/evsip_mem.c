@@ -124,7 +124,6 @@ void *evsip_mem_ref(void *data)
   if (m->magic != EVSIP_MEM_MAGIC) 
     return NULL;
   
-
   ++m->nbRefs;
 
   return data;
@@ -151,7 +150,6 @@ void *evsip_mem_deref(void *data)
   if (m->magic != EVSIP_MEM_MAGIC) 
     return NULL;
    
-
   if (--m->nbRefs > 0)
     return (void *)(m + 1);
 

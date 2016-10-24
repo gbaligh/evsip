@@ -29,6 +29,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 #include "evsip_evsofia.h"
 #include "evsip_log.h"
 #include "evsip_types.h"
+#include "evsip_cli_cmdlst.h"
 
 /**
  *
@@ -77,6 +78,8 @@ struct evsip_config_name_ptr_mapping_str {
   {"min_reg_expire",    EVSIP_CONIFG_TYPE_INTEGER,   offsetof(struct evsip_config_str, minRegExpires)}
 
 };
+
+static unsigned int evsip_register_cli_cmds(struct evsip_config_str *_pEvSipConfigCtx);
 
 /**
  * Strip whitespace chars off end of given string, in place.
@@ -256,6 +259,8 @@ unsigned int evsip_config_init(evsip_config_t *pEvSipConfigCtx, const char *pFil
 
   strcpy(_pEvSipConfigCtx->userAgent, EVSIP_CONFIG_DEF_USRAGENT);
 
+  evsip_register_cli_cmds(_pEvSipConfigCtx);
+
   return EVSIP_SUCCESS;
 }
 
@@ -280,5 +285,45 @@ unsigned int evsip_config_deinit(evsip_config_t *pEvSipConfigCtx)
 
   return EVSIP_SUCCESS;
 }
+
+unsigned int evsip_config_cmd_dump(void *pRef)
+{
+  int i = 0;
+  struct evsip_config_str *_pEvSipConfigCtx = (struct evsip_config_str *)pRef;
+
+  for (i = 0; i < sizeof(evsip_config_mapping)/sizeof(evsip_config_mapping[0]); ++i) {
+    switch (evsip_config_mapping[i].valueType) {
+      case EVSIP_CONIFG_TYPE_STRING64: 
+        EVSIP_LOG(EVSIP_CONFIG, EVSIP_LOG_INFO, "%s = %s", evsip_config_mapping[i].name, ((char*)_pEvSipConfigCtx + evsip_config_mapping[i].offset));
+        break;
+      case EVSIP_CONIFG_TYPE_INTEGER: 
+        EVSIP_LOG(EVSIP_CONFIG, EVSIP_LOG_INFO, "%s = %d", evsip_config_mapping[i].name, *((int*)((char*)_pEvSipConfigCtx + evsip_config_mapping[i].offset)));
+        break;
+    }
+  }
+
+  return EVSIP_SUCCESS;
+}
+
+static unsigned int evsip_register_cli_cmds(struct evsip_config_str *_pEvSipConfigCtx)
+{
+  unsigned int _ret = EVSIP_SUCCESS;
+  evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
+  
+  _ret = evsip_cli_cmd_init(&_pCmdCtx, "conf", "Dump all conf", 1, 1);
+  if ( _ret != EVSIP_SUCCESS) {
+    return _ret;
+  }
+
+  _ret = evsip_cli_cmd_register(_pCmdCtx, evsip_config_cmd_dump, (void *)_pEvSipConfigCtx);
+  if (_ret != EVSIP_SUCCESS) {
+    evsip_cli_cmd_destroy(_pCmdCtx);
+    return _ret;
+  }
+
+  return _ret;
+}
+
+
 
 //vim: noai:ts=2:sw=2

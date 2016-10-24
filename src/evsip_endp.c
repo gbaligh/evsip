@@ -82,7 +82,6 @@ struct evsip_endp_ctx {
 
 static unsigned int evsip_register_cli_cmds();
 
-
 unsigned int evsip_endp_init()
 {
   unsigned int _ret = EVSIP_SUCCESS;
