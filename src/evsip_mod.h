@@ -108,4 +108,5 @@ void evsip_mod_close(evsip_mod_t *mod);
 
 
 #endif // _EVSIP_MOD_H_
-//vim: noai:ts=2:sw=2
+
+// vim: noai:ts=2:sw=2

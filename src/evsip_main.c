@@ -160,4 +160,4 @@ LEAVE_ERROR:
     return (EXIT_FAILURE);
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

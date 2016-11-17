@@ -58,4 +58,4 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 #endif /* EVSIP_TYPES_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

@@ -37,4 +37,4 @@ const char *evsip_version(void)
   return evsip_version_name;//(sofia_sip_name_version);
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

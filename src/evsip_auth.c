@@ -30,3 +30,5 @@ unsigned int evsip_auth_challenge(sip_authorization_t *auth)
 {
     return EVSIP_SUCCESS;
 }
+
+// vim: noai:ts=2:sw=2

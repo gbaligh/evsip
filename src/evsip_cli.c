@@ -126,55 +126,57 @@ static void evsip_cli_prompt(int fdout, const unsigned int clean)
  */
 static int evsip_cli_input_handler(	su_root_magic_t *Ctx, su_wait_t *Wait, su_wakeup_arg_t *arg)
 {
-  char c = 0;
-  size_t size = 0;
-  int fd = su_wait_socket(Wait);
+	char c = 0;
+	size_t size = 0;
+	int fd = su_wait_socket(Wait);
 
-  if (Ctx) {};
-  if (arg) {};
+	if (Ctx) {};
+	if (arg) {};
 
-  size = read(fd, &c, sizeof(c));
-  if (size > 0) {
-    switch (c) {
-      case '?':
-                  write(evsip_cli_ctx.outFd, "\n", 1); 
-                  evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
-                  break;
-      case '\t': {
-                   evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
-                   write(evsip_cli_ctx.outFd, "\n", 1);
-                   if (evsip_cli_cmd_find(evsip_cli_ctx.cur_cmd, &_pCmdCtx) == EVSIP_SUCCESS) {
-                     fprintf(stdout, "%s\n", evsip_cli_cmd_str(_pCmdCtx));
-                   }
-                   evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
-                   break;
-                 }
-      case '\b':
-                 evsip_cli_ctx.cur_cmd[--evsip_cli_ctx.cur_cmd_len] = '\0';
-                 evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
-                 break;
-      case '\n':
-                 {
-                   evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
-                   if (evsip_cli_ctx.cur_cmd_len > 0) {
-                     if (evsip_cli_cmd_find(evsip_cli_ctx.cur_cmd, &_pCmdCtx) == EVSIP_SUCCESS) {
-                       evsip_cli_cmd_execute(_pCmdCtx);
-                     } else {
-                       fprintf(stdout, "%s: Command not found\n", evsip_cli_ctx.cur_cmd);
-                     }
-                   }
-                   evsip_cli_prompt(evsip_cli_ctx.outFd, 1);
-                   break;
-                 }
-      default:
-                 if (evsip_cli_ctx.cur_cmd_len < 255) {
-                   evsip_cli_ctx.cur_cmd[evsip_cli_ctx.cur_cmd_len++] = c;
-                 }
-                 break;
-    }
-  }
+	size = read(fd, &c, sizeof(c));
+	if (size > 0) {
+		switch (c) {
+			case '?':
+				if (write(evsip_cli_ctx.outFd, "\n", 1) > 0) { 
+					evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
+				}
+				break;
+			case '\t': 
+				{
+					evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
+					write(evsip_cli_ctx.outFd, "\n", 1);
+					if (evsip_cli_cmd_find(evsip_cli_ctx.cur_cmd, &_pCmdCtx) == EVSIP_SUCCESS) {
+						fprintf(stdout, "%s\n", evsip_cli_cmd_str(_pCmdCtx));
+					}
+					evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
+				}
+				break;
+			case '\b':
+				evsip_cli_ctx.cur_cmd[--evsip_cli_ctx.cur_cmd_len] = '\0';
+				evsip_cli_prompt(evsip_cli_ctx.outFd, 0);
+				break;
+			case '\n':
+				{
+					evsip_cli_cmd_t *_pCmdCtx = (evsip_cli_cmd_t *)0;
+					if (evsip_cli_ctx.cur_cmd_len > 0) {
+						if (evsip_cli_cmd_find(evsip_cli_ctx.cur_cmd, &_pCmdCtx) == EVSIP_SUCCESS) {
+							evsip_cli_cmd_execute(_pCmdCtx);
+						} else {
+							fprintf(stdout, "%s: Command not found\n", evsip_cli_ctx.cur_cmd);
+						}
+					}
+					evsip_cli_prompt(evsip_cli_ctx.outFd, 1);
+				}
+				break;
+			default:
+				if (evsip_cli_ctx.cur_cmd_len < 255) {
+					evsip_cli_ctx.cur_cmd[evsip_cli_ctx.cur_cmd_len++] = c;
+				}
+				break;
+		}
+	}
 
-  return (EVSIP_SUCCESS);
+	return (EVSIP_SUCCESS);
 }
 
 /**
@@ -288,4 +290,4 @@ void evsip_cli_deinit()
     tcsetattr(evsip_cli_ctx.inFd, TCSAFLUSH, evsip_cli_ctx.evsip_saved_term);
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

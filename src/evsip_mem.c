@@ -186,4 +186,4 @@ uint32_t evsip_mem_nrefs(const void *data)
   return m->nbRefs;
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

@@ -42,4 +42,4 @@ unsigned int evsip_invite_handler(nua_t *nua, nua_handle_t *nh, sip_t const *sip
   return (EVSIP_SUCCESS);
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2: 

@@ -33,4 +33,4 @@ void evsip_sig_deinit(void);
 
 #endif /* EVSIP_SIG_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

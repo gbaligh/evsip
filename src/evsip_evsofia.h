@@ -45,4 +45,4 @@ void evsip_evsofia_main(nua_event_t   event,
 
 #endif /* EVSIP_HSOFIA_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

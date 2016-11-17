@@ -107,4 +107,4 @@ void evsip_evsofia_main(nua_event_t   event,
    }
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

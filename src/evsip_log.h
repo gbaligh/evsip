@@ -62,4 +62,4 @@ void evsip_log_deinit(void);
 
 #endif /* EVSIP_LOG_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

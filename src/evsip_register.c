@@ -161,4 +161,4 @@ EXIT_500_ERROR:
     return _ret;
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

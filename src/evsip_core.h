@@ -48,4 +48,4 @@ void evsip_deinit(void );
 
 #endif /* EVSIP_CORE_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

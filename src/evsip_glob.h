@@ -81,4 +81,4 @@ const char *evsip_version(void);
 
 #endif /* EVSIP_GLOB_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

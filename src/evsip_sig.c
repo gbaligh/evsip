@@ -136,4 +136,4 @@ void evsip_sig_deinit()
     /* nothing to do right now */
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

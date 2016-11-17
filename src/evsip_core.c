@@ -187,4 +187,4 @@ static unsigned int evsip_register_cli_cmds()
    return (EVSIP_SUCCESS);
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

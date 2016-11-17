@@ -48,11 +48,10 @@ unsigned int evsip_cli_cmd_create(su_home_t *home, evsip_cli_cmd_t **pCtx);
  * @param mode
  * @return
  */
-unsigned int evsip_cli_cmd_init(evsip_cli_cmd_t **pCtx,
-								const char *cmd,
-								const char *help,
-								const unsigned int privilege,
-								const unsigned int mode);
+unsigned int evsip_cli_cmd_init(evsip_cli_cmd_t **pCtx, const char *cmd,
+							const char *help,
+							const unsigned int privilege,
+							const unsigned int mode);
 
 /**
  *
@@ -91,9 +90,8 @@ void evsip_cli_cmd_destroy(evsip_cli_cmd_t *pCmdCtx);
 
 void evsip_cli_cmd_destroy_all();
 
-
 unsigned int evsip_cli_cmd_register_help_cmd(void);
 
 #endif /* EVSIP_CLI_CMDLST_H_ */
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

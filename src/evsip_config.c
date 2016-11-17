@@ -326,4 +326,4 @@ static unsigned int evsip_register_cli_cmds(struct evsip_config_str *_pEvSipConf
 
 
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2

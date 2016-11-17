@@ -132,4 +132,4 @@ void __cyg_profile_func_exit(void *this_fn, void *call_site)
   //fprintf(stdout, "<-- this_fn(%p),call_site(%p)\n", this_fn, call_site);
 }
 
-//vim: noai:ts=2:sw=2
+// vim: noai:ts=2:sw=2
