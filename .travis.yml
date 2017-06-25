@@ -5,7 +5,7 @@ env:
 addons:
   coverity_scan:
     project:
-      name: "cmoibal/evsip"
+      name: "gbaligh/evsip"
       description: "Build submitted via Travis CI"
     notification_email: gasmibal@gmail.com
     build_command_prepend: "./autogen.sh && PKG_CONFIG_PATH=$HOME/sofiasip/lib/pkgconfig ./configure && make clean"
