@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cmoibal/evsip.svg?branch=master)](https://travis-ci.org/cmoibal/evsip)
+[![Build Status](https://travis-ci.org/gbaligh/evsip.svg?branch=master)](https://travis-ci.org/gbaligh/evsip)
 [![Coverity Scan Build](https://scan.coverity.com/projects/6939/badge.svg)](https://scan.coverity.com/projects/cmoibal-evsip)
 
 #EasyVision SIP Server
